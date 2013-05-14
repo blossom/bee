@@ -4,7 +4,7 @@ Bee is a collection of lightweight interaction elements for modern web applicati
 
 ##Install
 
-Bee is a pub package. To install it you can add it to pubspec.yaml. For example:
+Bee is a [Pub Package](http://pub.dartlang.org/packages/bee). To install Bee you can add it to your pubspec.yaml.
 
 ```yaml
 name: my-app
