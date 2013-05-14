@@ -6,7 +6,6 @@ authors:
 - Thomas Schranz <thomas@blossom.io>
 description: A Collection of lightweight Dart Web UI Components
 homepage: https://www.blossom.io/bee
-documentation: http://blossom.github.com/bee/doc/gravatar/Gravatar.html
 dependencies:
   web_ui: ">=0.4.8 <0.5.0"
 dev_dependencies:
