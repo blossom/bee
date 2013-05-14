@@ -7,25 +7,25 @@ Bee is a collection of lightweight interaction elements for modern web applicati
 
 ###Button
 
-```
+```html
 <div is="x-button-submit" value="Primary"></div>
 ```
 
 ####Show Password
 
-```
+```html
 <div is="x-input-password" placeholder="Enter your Password"></div>
 ```
 
 ####Loading Indicator
 
-```
+```html
 <span is="x-ellipsis"></span>
 ```
 
 ####Popover
 
-```
+```html
 <div is="x-popover">
     <span class="launch-area">Toggle Popover</span>
     <div class="body">This is a Popover</div>
@@ -34,7 +34,7 @@ Bee is a collection of lightweight interaction elements for modern web applicati
 
 ####Overlay
 
-```
+```html
 <div is="x-overlay">
     <div class="body">This is an Overlay</div>
 </div>
