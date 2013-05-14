@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+  <element name="x-popover" constructor="PopoverComponent" extends="div">
+    <template>
+      <style>
+        .x-popover-wrapper {
+            position: relative;
+        }
+        .x-popover-dialog {
+            position: absolute;
+            top: 8px;
+            z-index: 999;
+            width: 213px;
+            border: 1px solid #cccccc;
+            -moz-box-shadow: -1px 1px 1px rgba(0,0,0,.2);
+            -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.2);
+            box-shadow: 0 2px 4px rgba(0,0,0,.2);
+            background: #ffffff;
+        }
+
+        .x-popover-arrow {
+            position: absolute;
+            top: -16px;
+            left: 20px;
+        }
+
+        span.x-popover-arrow-up-outline {
+            border-color: transparent transparent #bbbbbb transparent;
+            border-style: solid;
+            border-width: 8px;
+            width: 0;
+            height: 0;
+            display: block;
+        }
+        span.x-popover-arrow-up-body {
+            border-color: transparent transparent #ffffff transparent;
+            border-style: solid;
+            border-width: 8px;
+            width: 0;
+            height: 0;
+            display: block;
+            margin-top: -15px;
+        }
+        .x-popover-body {
+            padding: 15px;
+        }
+        .x-launch-area {
+            display: inline;
+        }
+        .x-launch-area:hover {
+            cursor: pointer;
+            color: #aaaaaa;
+        }
+      </style>
+      <div class="x-launch-area q-launch-area">
+        <content select=".launch-area"></content>
+      </div>
+      <!-- We use disblay block/none to toggle the visibility of the popover since
+           content tags inside templates don't work at the moment (Web UI 0.4.5)
+           see https://github.com/dart-lang/web-ui/issues/228
+
+           In the future we want to use:
+           <template instantiate if="state == State.ACTIVE">
+              ...
+              <content select=".body"></content>
+              ...
+           </template>
+      -->
+      <div class="x-popover-wrapper q-x-popover-wrapper" data-element-timestamp="{{elementTimestamp}}">
+        <div class="x-popover-dialog">
+          <div class="x-popover-header">
+            <div class="x-popover-arrow q-x-popover-arrow">
+              <span class="x-popover-arrow-up-outline"></span>
+              <span class="x-popover-arrow-up-body"></span>
+            </div>
+          </div>
+          <div class="x-popover-body">
+            <content select=".body"></content>
+          </div>
+          <div class="x-popover-footer"></div>
+        </div>
+      </div>
+
+    </template>
+    <script type="application/dart" src="popover.dart"></script>
+  </element>
+</body></html>

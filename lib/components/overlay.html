@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+  <element name="x-overlay" constructor="OverlayComponent" extends="div">
+    <template>
+      <style>
+        /* overflow-y scroll is important for preventing to jump to top of the page when opening an overlay */
+        body {
+          overflow: visible;
+          overflow-y: scroll;
+        }
+        .overlay-backdrop-active body {
+          overflow: hidden;
+        }
+        /*
+        TODO handle the body classes properly
+
+        // to avoid jumping of the page content we force vertical scrollbars using overflow-y:scroll.
+        // but when opening an overlay we want to prevent scrolling in the body by applying overflow:hidden to
+        // insure that after closing the overlay the user can continue where he left off.
+        // (this preserves the context of the underlying page for the user -> same scroll position of underlying page before opening overlay)
+        // since overflow:hidden removes the browsers permanent scrollbars this makes the page content behind the overlay jump.
+        // fix: to make up for the missing scrollbar when opening an overlay we simultaneously set a right margin of the scrollbar's width.
+        // this fix implicitly fixes the scrollbar behaviour for multiple overlays
+        .overlay-backdrop-active
+          body.scrollbar0
+            margin-right 0px
+          body.scrollbar15
+            margin-right 15px
+          body.scrollbar20
+            margin-right 20px
+        */
+        .x-overlay-backdrop {
+          background-color: rgba(252, 252, 252, 0.7);
+          -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#B3FCFCFC, endColorstr=#B3FCFCFC)";
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 998;
+          overflow-x: auto;
+          overflow-y: scroll;
+          display: none;
+        }
+
+        .x-overlay-backdrop-close {
+          color: #aaa;
+          font-size: 30px;
+          width: 30px;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          border: 0;
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          cursor: pointer;
+        }
+
+        .x-overlay-body {
+          border: 1px solid #cccccc;
+          z-index: 999;
+          -moz-box-shadow: -1px 1px 1px rgba(0,0,0,.2);
+          -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.2);
+          box-shadow: 0 2px 4px rgba(0,0,0,.2);
+          background: #ffffff;
+          position: static;
+          margin: 60px auto;
+          padding: 60px;
+        }
+      </style>
+      <div class="x-overlay-backdrop q-x-overlay-backdrop">
+        <div class="x-overlay-backdrop-close q-x-overlay-backdrop-close" title="Press ESC to close">×</div>
+        <!-- we can and should remove the overlay class -->
+        <div class="x-overlay-body q-overlay" data-element-timestamp="{{elementTimestamp}}">
+          <content></content>
+        </div>
+      </div>
+    </template>
+    <script type="application/dart" src="overlay.dart"></script>
+  </element>
+</body></html>

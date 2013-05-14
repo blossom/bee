@@ -1,0 +1,16 @@
+name: bee
+version: 0.0.1
+authors:
+- Allan Berger <allan@blossom.io>
+- Nik Graf <nik@blossom.io>
+- Thomas Schranz <thomas@blossom.io>
+description: A Collection of lightweight Dart Web UI Components
+homepage: https://www.blossom.io/bee
+documentation: http://blossom.github.com/bee/doc/gravatar/Gravatar.html
+dependencies:
+  web_ui:
+    git:
+      ref: ce921b1a96dd239be1156800a1dca68520c3cfb3
+      url: git@github.com:nikgraf/web-ui.git
+dev_dependencies:
+  unittest: '>=0.5.7 <0.6.0'
