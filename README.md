@@ -51,6 +51,24 @@ dependencies:
 </x-overlay>
 ```
 
+## Nexted Example
+
+A button which opens an overlay on click. The overlay contains a popover.
+Note: Pressing 'ESC' closes popovers as well as overlays but only closes the youngest (last shown) component.
+
+```html
+<x-button type="button" on-click="query('.q-example-nested').xtag.show()" on-touch-start="query('.q-example-nested').xtag.show()">Launch Overlay</x-button>
+<x-overlay width="600px" class="q-example-nested">
+    <h2>Bee</h2>
+    <p>Bee is a collection of lightweight interaction elements for modern web applications. It is built on top of Dart's Web UI package. It contains frequently used components like Buttons, Popovers, Overlays, Input Fields and more.</p>
+    <x-popover>
+        <x-button type="button" class="launch-area">Launch Popover inside Overlay</x-button>
+        <div class="body">This is a Popover</div>
+    </x-popover>
+    <p>Bee is a collection of lightweight interaction elements for modern web applications. It is built on top of Dart's Web UI package. It contains frequently used components like Buttons, Popovers, Overlays, Input Fields and more.</p>
+</x-overlay>
+```
+
 ##Coming Soon …
 
 This is just the initial release and we'll add a bunch of additional components, examples, documentation and polish going forward :)
@@ -58,3 +76,4 @@ This is just the initial release and we'll add a bunch of additional components,
 * Tests, Tests, Tests
 * Component: Tooltip
 * Component: Date Picker
+* Component: Gravatar
