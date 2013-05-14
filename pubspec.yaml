@@ -8,9 +8,6 @@ description: A Collection of lightweight Dart Web UI Components
 homepage: https://www.blossom.io/bee
 documentation: http://blossom.github.com/bee/doc/gravatar/Gravatar.html
 dependencies:
-  web_ui:
-    git:
-      ref: ce921b1a96dd239be1156800a1dca68520c3cfb3
-      url: git@github.com:nikgraf/web-ui.git
+  web_ui: ">=0.4.8 <0.5.0"
 dev_dependencies:
   unittest: '>=0.5.7 <0.6.0'
