@@ -27,7 +27,7 @@ Bee is a collection of lightweight interaction elements for modern web applicati
 
 ```html
 <div is="x-popover">
-    <span class="launch-area">Toggle Popover</span>
+    <span class="launch-area">Launch Popover</span>
     <div class="body">This is a Popover</div>
 </div>
 ```
@@ -35,9 +35,11 @@ Bee is a collection of lightweight interaction elements for modern web applicati
 ####Overlay
 
 ```html
-<div is="x-overlay">
-    <div class="body">This is an Overlay</div>
-</div>
+<span on-click="query('.q-example-overlay').xtag.show()" on-touch-start="query('.q-example-overlay').xtag.show()">Launch Overlay</span>
+<x-overlay width="600px" class="q-example-overlay">
+    <h2>Bee</h2>
+    <p>Bee is a collection of lightweight interaction elements for modern web applications. It is built on top of Dart's Web UI package. It contains frequently used components like Buttons, Popovers, Overlays, Input Fields and more.</p>
+</x-overlay>
 ```
 
 **Coming Soon …**
