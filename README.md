@@ -58,4 +58,3 @@ This is just the initial release and we'll add a bunch of additional components,
 * Tests, Tests, Tests
 * Component: Tooltip
 * Component: Date Picker
-* Component: Gravatar
