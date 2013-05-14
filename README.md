@@ -20,19 +20,19 @@ dependencies:
 <div is="x-button-submit" value="Primary"></div>
 ```
 
-####Show Password
+###Show Password
 
 ```html
 <div is="x-input-password" placeholder="Enter your Password"></div>
 ```
 
-####Loading Indicator
+###Loading Indicator
 
 ```html
 <span is="x-ellipsis"></span>
 ```
 
-####Popover
+###Popover
 
 ```html
 <div is="x-popover">
@@ -41,7 +41,7 @@ dependencies:
 </div>
 ```
 
-####Overlay
+###Overlay
 
 ```html
 <span on-click="query('.q-example-overlay').xtag.show()" on-touch-start="query('.q-example-overlay').xtag.show()">Launch Overlay</span>
@@ -51,7 +51,9 @@ dependencies:
 </x-overlay>
 ```
 
-**Coming Soon …**
+##Coming Soon …
+
+This is just the initial release and we'll add a bunch of additional components, examples, documentation and polish going forward :)
 
 * Tests, Tests, Tests
 * Component: Tooltip
