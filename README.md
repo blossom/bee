@@ -17,28 +17,28 @@ dependencies:
 ###Button
 
 ```html
-<div is="x-button-submit" value="Primary"></div>
+<x-button value="Primary"></x-button>
 ```
 
 ###Show Password
 
 ```html
-<div is="x-input-password" placeholder="Enter your Password"></div>
+<x-secret placeholder="Enter your Password"></x-secret>
 ```
 
 ###Loading Indicator
 
 ```html
-<span is="x-ellipsis"></span>
+<x-loading></x-loading>
 ```
 
 ###Popover
 
 ```html
-<div is="x-popover">
+<x-popover>
     <span class="launch-area">Launch Popover</span>
     <div class="body">This is a Popover</div>
-</div>
+</x-popover>
 ```
 
 ###Overlay
