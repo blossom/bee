@@ -12,6 +12,17 @@ dependencies:
   bee: any
 ```
 
+To use a component you need to import it via a link tag.
+
+```html
+<link rel="import" href="package:bee/components/button.html">
+<link rel="import" href="package:bee/components/secret.html">
+<link rel="import" href="package:bee/components/loading.html">
+<link rel="import" href="package:bee/components/popover.html">
+<link rel="import" href="package:bee/components/overlay.html">
+<link rel="import" href="package:bee/components/button.html">
+```
+
 ##Components
 
 ###Button
