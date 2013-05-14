@@ -2,6 +2,15 @@
 
 Bee is a collection of lightweight interaction elements for modern web applications. It is built on top of [Dart's Web UI](http://www.dartlang.org/articles/web-ui/) package. It contains frequently used components like Buttons, Popovers, Overlays, Input Fields and more.
 
+##Install
+
+Bee is a pub package. To install it you can add it to pubspec.yaml. For example:
+
+```yaml
+name: my-app
+dependencies:
+  bee: any
+```
 
 ##Components
 
