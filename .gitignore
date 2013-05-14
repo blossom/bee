@@ -1,0 +1,5 @@
+.DS_Store
+packages
+web/out
+pubspec.lock
+.buildlog
