@@ -16,24 +16,7 @@
         .overlay-backdrop-active body {
           overflow: hidden;
         }
-        /*
-        TODO handle the body classes properly
 
-        // to avoid jumping of the page content we force vertical scrollbars using overflow-y:scroll.
-        // but when opening an overlay we want to prevent scrolling in the body by applying overflow:hidden to
-        // insure that after closing the overlay the user can continue where he left off.
-        // (this preserves the context of the underlying page for the user -> same scroll position of underlying page before opening overlay)
-        // since overflow:hidden removes the browsers permanent scrollbars this makes the page content behind the overlay jump.
-        // fix: to make up for the missing scrollbar when opening an overlay we simultaneously set a right margin of the scrollbar's width.
-        // this fix implicitly fixes the scrollbar behaviour for multiple overlays
-        .overlay-backdrop-active
-          body.scrollbar0
-            margin-right 0px
-          body.scrollbar15
-            margin-right 15px
-          body.scrollbar20
-            margin-right 20px
-        */
         .x-overlay-backdrop {
           background-color: rgba(252, 252, 252, 0.7);
           -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#B3FCFCFC, endColorstr=#B3FCFCFC)";
