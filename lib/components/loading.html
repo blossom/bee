@@ -13,23 +13,35 @@
              50% { opacity: 0; }
             100% { opacity: 1; }
         }
+        
+        @keyframes x-loading-dot {
+              0% { opacity: 1; }
+             50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
 
         .x-loading-one {
             opacity: 1;
             -webkit-animation: x-loading-dot 1.3s infinite;
             -webkit-animation-delay: 0.0s;
+            animation: x-loading-dot 1.3s infinite;
+            animation-delay: 0.0s;
         }
 
         .x-loading-two {
             opacity: 1;
             -webkit-animation: x-loading-dot 1.3s infinite;
             -webkit-animation-delay: 0.2s;
+            animation: x-loading-dot 1.3s infinite;
+            animation-delay: 0.2s;
         }
 
         .x-loading-three {
             opacity: 1;
             -webkit-animation: x-loading-dot 1.3s infinite;
             -webkit-animation-delay: 0.3s;
+            animation: x-loading-dot 1.3s infinite;
+            animation-delay: 0.3s;
         }
       </style>
       <span class="q-x-loading">
