@@ -28,38 +28,38 @@ To use a component you need to import it via a link tag.
 ###Button
 
 ```html
-<x-button value="Primary"></x-button>
+<b-button>Primary</b-button>
 ```
 
 ###Show Password
 
 ```html
-<x-secret placeholder="Enter your Password"></x-secret>
+<b-secret placeholder="Enter your Password"></b-secret>
 ```
 
 ###Loading Indicator
 
 ```html
-<x-loading></x-loading>
+<b-loading></b-loading>
 ```
 
 ###Popover
 
 ```html
-<x-popover>
+<b-popover>
     <span class="launch-area">Launch Popover</span>
     <div class="body">This is a Popover</div>
-</x-popover>
+</b-popover>
 ```
 
 ###Overlay
 
 ```html
 <span on-click="query('.q-example-overlay').xtag.show()" on-touch-start="query('.q-example-overlay').xtag.show()">Launch Overlay</span>
-<x-overlay width="600px" class="q-example-overlay">
+<b-overlay width="600px" class="q-example-overlay">
     <h2>Bee</h2>
     <p>Bee is a collection of lightweight interaction elements for modern web applications. It is built on top of Dart's Web UI package. It contains frequently used components like Buttons, Popovers, Overlays, Input Fields and more.</p>
-</x-overlay>
+</b-overlay>
 ```
 
 ## Nexted Example
@@ -68,16 +68,16 @@ A button which opens an overlay on click. The overlay contains a popover.
 Note: Pressing 'ESC' closes popovers as well as overlays but only closes the youngest (last shown) component.
 
 ```html
-<x-button type="button" on-click="query('.q-example-nested').xtag.show()" on-touch-start="query('.q-example-nested').xtag.show()">Launch Overlay</x-button>
-<x-overlay width="600px" class="q-example-nested">
+<b-button type="button" on-click="query('.q-example-nested').xtag.show()" on-touch-start="query('.q-example-nested').xtag.show()">Launch Overlay</b-button>
+<b-overlay width="600px" class="q-example-nested">
     <h2>Bee</h2>
     <p>Bee is a collection of lightweight interaction elements for modern web applications. It is built on top of Dart's Web UI package. It contains frequently used components like Buttons, Popovers, Overlays, Input Fields and more.</p>
-    <x-popover>
-        <x-button type="button" class="launch-area">Launch Popover inside Overlay</x-button>
+    <b-popover>
+        <b-button type="button" class="launch-area">Launch Popover inside Overlay</b-button>
         <div class="body">This is a Popover</div>
-    </x-popover>
+    </b-popover>
     <p>Bee is a collection of lightweight interaction elements for modern web applications. It is built on top of Dart's Web UI package. It contains frequently used components like Buttons, Popovers, Overlays, Input Fields and more.</p>
-</x-overlay>
+</b-overlay>
 ```
 
 ##Coming Soon …
