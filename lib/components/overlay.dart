@@ -39,9 +39,9 @@ class OverlayComponent extends WebComponent {
   }
 
   void inserted() {
-    this._backdrop = getShadowRoot('x-overlay').query('.q-x-overlay-backdrop');
+    this._backdrop = getShadowRoot('b-overlay').query('.q-b-overlay-backdrop');
     this._updateState(this.state);
-    getShadowRoot('x-overlay').query('.q-overlay').style.width = this.width;
+    getShadowRoot('b-overlay').query('.q-overlay').style.width = this.width;
   }
 
   void hide() {
@@ -82,12 +82,12 @@ class OverlayComponent extends WebComponent {
   void _removeClickHandler(event) {
     // close the overlay in case the user clicked outside of the overlay content area
     Element backdrop;
-    if (event.target.classes.contains('q-x-overlay-backdrop')) {
+    if (event.target.classes.contains('q-b-overlay-backdrop')) {
       backdrop = event.target;
-    } else if (event.target.classes.contains('q-x-overlay-backdrop-close')) {
+    } else if (event.target.classes.contains('q-b-overlay-backdrop-close')) {
       backdrop = event.target.parent;
     }
-    if (backdrop != null && backdrop.contains(getShadowRoot('x-overlay').query('.q-overlay[data-element-timestamp="${this.elementTimestamp}"]'))) {
+    if (backdrop != null && backdrop.contains(getShadowRoot('b-overlay').query('.q-overlay[data-element-timestamp="${this.elementTimestamp}"]'))) {
       event.preventDefault();
       _updateState(State.DEACTIVE);
     }
@@ -122,7 +122,7 @@ class OverlayComponent extends WebComponent {
     if (this.clickSubscription != null) { try { this.clickSubscription.cancel(); } on StateError {}; }
     if (this.touchSubscription != null) { try { this.touchSubscription.cancel(); } on StateError {}; }
     if (this.keySubscription != null) { try { this.keySubscription.cancel(); } on StateError {}; }
-    List<Element> backdrops = queryAll('.q-x-overlay-backdrop');
+    List<Element> backdrops = queryAll('.q-b-overlay-backdrop');
     // TODO check for visible getter in the future, see https://code.google.com/p/dart/issues/detail?id=6526
     Iterable<Element> visibleBackdrops = backdrops.where((Element backdrop) => backdrop.style.display != 'none');
     if (visibleBackdrops.length == 0) {
@@ -142,7 +142,7 @@ class OverlayComponent extends WebComponent {
     // remove itself from the dom before the second overlay (B) can query for all overlays (A & B)
     // it will remove itself
     if (event.keyCode == 27) {
-      List<int> escElements = queryAll('[data-element-timestamp]').map((element) => int.parse(element.dataset['element-timestamp']));
+      Iterable<int> escElements = queryAll('[data-element-timestamp]').map((element) => int.parse(element.dataset['element-timestamp']));
       String youngestEscElement = escElements.fold(0, (prev, element) => (prev > element) ? prev : element).toString();
       if (youngestEscElement == this.elementTimestamp) {
         this._updateState(State.DEACTIVE);

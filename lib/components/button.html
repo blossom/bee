@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
 <html><body>
-  <element name="x-button"  constructor="ButtonSubmitComponent" extends="div">
+  <element name="b-button"  constructor="ButtonSubmitComponent" extends="div">
     <template>
       <style>
-        .x-button {
+        .b-button {
           font-family: "ff-kievit-web-pro-1", "ff-kievit-web-pro-2", sans-serif;
           -webkit-border-radius: 4px;
           -moz-border-radius: 4px;
@@ -38,14 +38,14 @@
           -o-transition: 0.1s linear all;
           transition: 0.1s linear all;
         }
-        .x-button:hover {
+        .b-button:hover {
           background: #234b95;
         }
-        .x-button:focus {
+        .b-button:focus {
           outline: 5px auto -webkit-focus-ring-color;
           outline-offset: -2px;
         }
-        .x-button:active {
+        .b-button:active {
           -webkit-transition: none;
           -moz-transition: none;
           -ms-transition: none;
@@ -60,7 +60,7 @@
         /* TODO we need a styling for the disabled state */
       </style>
       <button type="{{type}}"
-             class="x-button q-x-button"
+             class="b-button q-b-button"
              disabled="{{disabled}}">
         <content></content>
       </button>

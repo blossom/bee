@@ -5,6 +5,6 @@ class LoadingComponent extends WebComponent {
   String color = "#505050";
 
   void inserted() {
-    getShadowRoot('x-loading').query('.q-x-loading').style.color = this.color;
+    getShadowRoot('b-loading').query('.q-b-loading').style.color = this.color;
   }
 }
