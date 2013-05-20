@@ -19,8 +19,8 @@ class SecretComponent extends WebComponent {
   DivElement _textWrapper;
 
   void inserted() {
-    this._passwordWrapper = getShadowRoot('x-secret').query('.q-x-secret-password-wrapper');
-    this._textWrapper = getShadowRoot('x-secret').query('.q-x-secret-text-wrapper');
+    this._passwordWrapper = getShadowRoot('b-secret').query('.q-b-secret-password-wrapper');
+    this._textWrapper = getShadowRoot('b-secret').query('.q-b-secret-text-wrapper');
     this._updateState();
   }
 
@@ -68,8 +68,8 @@ class SecretComponent extends WebComponent {
     // in IE9 the focus event is fired around 9x milliseconds after the blur event
     // picked 200 milliseconds for our timer to be on the safe side
     new Timer(new Duration(milliseconds:200), () {
-      Element textField = getShadowRoot('x-secret').query('.q-text-field');
-      Element passwordField = getShadowRoot('x-secret').query('.q-password-field');
+      Element textField = getShadowRoot('b-secret').query('.q-text-field');
+      Element passwordField = getShadowRoot('b-secret').query('.q-password-field');
       if (document.activeElement != textField && document.activeElement != passwordField) {
         this.dispatchEvent(new Event("blur"));
         this._hasFocus = false;
@@ -98,9 +98,9 @@ class SecretComponent extends WebComponent {
 
   InputElement get _activeInput {
     if (_passwordActive) {
-      return getShadowRoot('x-secret').query('.q-password-field');
+      return getShadowRoot('b-secret').query('.q-password-field');
     } else {
-      return getShadowRoot('x-secret').query('.q-text-field');
+      return getShadowRoot('b-secret').query('.q-text-field');
     }
   }
 

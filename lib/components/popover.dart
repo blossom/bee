@@ -35,16 +35,16 @@ class PopoverComponent extends WebComponent {
   String arrowBottom;
 
   void inserted() {
-    this._popoverWrapper = getShadowRoot('x-popover').query('.q-x-popover-wrapper');
+    this._popoverWrapper = getShadowRoot('b-popover').query('.q-b-popover-wrapper');
     this._updateState(this.state);
     this._setCssStyles();
     this.documentClick = document.onClick.listen(null);
     this.documentClick.onData(this._hideClickHandler);
     this.documentTouch = document.onTouchStart.listen(null);
     this.documentTouch.onData(this._hideClickHandler);
-    this.toggleClick = getShadowRoot('x-popover').query('.q-launch-area').onClick.listen(null);
+    this.toggleClick = getShadowRoot('b-popover').query('.q-launch-area').onClick.listen(null);
     this.toggleClick.onData(this.toggle);
-    this.toggleTouch = getShadowRoot('x-popover').query('.q-launch-area').onTouchStart.listen(null);
+    this.toggleTouch = getShadowRoot('b-popover').query('.q-launch-area').onTouchStart.listen(null);
     this.toggleTouch.onData(this.toggle);
     this.keySubscription = window.onKeyUp.listen(null);
     this.keySubscription.onData(this._keyHandler);
@@ -67,7 +67,7 @@ class PopoverComponent extends WebComponent {
   }
 
   void _setCssStyles() {
-    Element arrow = getShadowRoot('x-popover').query('.q-x-popover-arrow');
+    Element arrow = getShadowRoot('b-popover').query('.q-b-popover-arrow');
     if (this.left != null) { this._popoverWrapper.style.left = this.left; }
     if (this.right != null) { this._popoverWrapper.style.right = this.right; }
     if (this.top != null) { this._popoverWrapper.style.top = this.top; }
@@ -116,7 +116,7 @@ class PopoverComponent extends WebComponent {
     // remove itself from the dom before the second overlay (B) can query for all overlays (A & B)
     // it will remove itself
     if (event.keyCode == 27) {
-      List<int> escElements = queryAll('[data-element-timestamp]').map((element) => int.parse(element.dataset['element-timestamp']));
+      Iterable<int> escElements = queryAll('[data-element-timestamp]').map((element) => int.parse(element.dataset['element-timestamp']));
       String youngestEscElement = escElements.fold(0, (prev, element) => (prev > element) ? prev : element).toString();
       if (youngestEscElement == this.elementTimestamp) {
         this._updateState(State.DEACTIVE);

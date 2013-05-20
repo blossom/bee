@@ -5,7 +5,7 @@
     <meta charset="utf-8">
   </head>
   <body>
-  <element name="x-overlay" constructor="OverlayComponent" extends="div">
+  <element name="b-overlay" constructor="OverlayComponent" extends="div">
     <template>
       <style>
         /* overflow-y scroll is important for preventing to jump to top of the page when opening an overlay */
@@ -17,7 +17,7 @@
           overflow: hidden;
         }
 
-        .x-overlay-backdrop {
+        .b-overlay-backdrop {
           background-color: rgba(252, 252, 252, 0.7);
           -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#B3FCFCFC, endColorstr=#B3FCFCFC)";
           position: fixed;
@@ -31,7 +31,7 @@
           display: none;
         }
 
-        .x-overlay-backdrop-close {
+        .b-overlay-backdrop-close {
           color: #aaa;
           font-size: 30px;
           width: 30px;
@@ -45,7 +45,7 @@
           cursor: pointer;
         }
 
-        .x-overlay-body {
+        .b-overlay-body {
           border: 1px solid #cccccc;
           z-index: 999;
           -moz-box-shadow: -1px 1px 1px rgba(0,0,0,.2);
@@ -57,9 +57,9 @@
           padding: 60px;
         }
       </style>
-      <div class="x-overlay-backdrop q-x-overlay-backdrop">
-        <div class="x-overlay-backdrop-close q-x-overlay-backdrop-close" title="Press ESC to close">×</div>
-        <div class="x-overlay-body q-overlay" data-element-timestamp="{{elementTimestamp}}">
+      <div class="b-overlay-backdrop q-b-overlay-backdrop">
+        <div class="b-overlay-backdrop-close q-b-overlay-backdrop-close" title="Press ESC to close">×</div>
+        <div class="b-overlay-body q-overlay" data-element-timestamp="{{elementTimestamp}}">
           <content></content>
         </div>
       </div>
