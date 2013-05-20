@@ -5,35 +5,35 @@
     <meta charset="utf-8">
   </head>
   <body>
-  <element name="x-loading" constructor="LoadingComponent" extends="span">
+  <element name="b-loading" constructor="LoadingComponent" extends="span">
     <template>
       <style>
-        @-webkit-keyframes x-loading-dot {
+        @-webkit-keyframes b-loading-dot {
               0% { opacity: 1; }
              50% { opacity: 0; }
             100% { opacity: 1; }
         }
 
-        .x-loading-one {
+        .b-loading-one {
             opacity: 1;
-            -webkit-animation: x-loading-dot 1.3s infinite;
+            -webkit-animation: b-loading-dot 1.3s infinite;
             -webkit-animation-delay: 0.0s;
         }
 
-        .x-loading-two {
+        .b-loading-two {
             opacity: 1;
-            -webkit-animation: x-loading-dot 1.3s infinite;
+            -webkit-animation: b-loading-dot 1.3s infinite;
             -webkit-animation-delay: 0.2s;
         }
 
-        .x-loading-three {
+        .b-loading-three {
             opacity: 1;
-            -webkit-animation: x-loading-dot 1.3s infinite;
+            -webkit-animation: b-loading-dot 1.3s infinite;
             -webkit-animation-delay: 0.3s;
         }
       </style>
-      <span class="q-x-loading">
-        <span class="x-loading-one">.</span><span class="x-loading-two">.</span><span class="x-loading-three">.</span>
+      <span class="q-b-loading">
+        <span class="b-loading-one">.</span><span class="b-loading-two">.</span><span class="b-loading-three">.</span>
       </span>
     </template>
     <script type="application/dart" src="loading.dart"></script>

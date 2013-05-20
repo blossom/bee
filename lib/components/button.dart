@@ -5,6 +5,6 @@ class ButtonSubmitComponent extends WebComponent {
   bool disabled = false;
 
   void focus() {
-    getShadowRoot('x-button').query('.q-x-button').focus();
+    getShadowRoot('b-button').query('.q-b-button').focus();
   }
 }

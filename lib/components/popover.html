@@ -5,13 +5,13 @@
     <meta charset="utf-8">
   </head>
   <body>
-  <element name="x-popover" constructor="PopoverComponent" extends="div">
+  <element name="b-popover" constructor="PopoverComponent" extends="div">
     <template>
       <style>
-        .x-popover-wrapper {
+        .b-popover-wrapper {
             position: relative;
         }
-        .x-popover-dialog {
+        .b-popover-dialog {
             position: absolute;
             top: 8px;
             z-index: 999;
@@ -23,13 +23,13 @@
             background: #ffffff;
         }
 
-        .x-popover-arrow {
+        .b-popover-arrow {
             position: absolute;
             top: -16px;
             left: 20px;
         }
 
-        span.x-popover-arrow-up-outline {
+        span.b-popover-arrow-up-outline {
             border-color: transparent transparent #bbbbbb transparent;
             border-style: solid;
             border-width: 8px;
@@ -37,7 +37,7 @@
             height: 0;
             display: block;
         }
-        span.x-popover-arrow-up-body {
+        span.b-popover-arrow-up-body {
             border-color: transparent transparent #ffffff transparent;
             border-style: solid;
             border-width: 8px;
@@ -46,7 +46,7 @@
             display: block;
             margin-top: -15px;
         }
-        .x-popover-body {
+        .b-popover-body {
             padding: 15px;
         }
         .x-launch-area {
@@ -71,18 +71,18 @@
               ...
            </template>
       -->
-      <div class="x-popover-wrapper q-x-popover-wrapper" data-element-timestamp="{{elementTimestamp}}">
-        <div class="x-popover-dialog">
-          <div class="x-popover-header">
-            <div class="x-popover-arrow q-x-popover-arrow">
-              <span class="x-popover-arrow-up-outline"></span>
-              <span class="x-popover-arrow-up-body"></span>
+      <div class="b-popover-wrapper q-b-popover-wrapper" data-element-timestamp="{{elementTimestamp}}">
+        <div class="b-popover-dialog">
+          <div class="b-popover-header">
+            <div class="b-popover-arrow q-b-popover-arrow">
+              <span class="b-popover-arrow-up-outline"></span>
+              <span class="b-popover-arrow-up-body"></span>
             </div>
           </div>
-          <div class="x-popover-body">
+          <div class="b-popover-body">
             <content select=".body"></content>
           </div>
-          <div class="x-popover-footer"></div>
+          <div class="b-popover-footer"></div>
         </div>
       </div>
 
