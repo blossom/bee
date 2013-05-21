@@ -104,6 +104,14 @@ class SecretComponent extends WebComponent {
     }
   }
 
+  get _focusClass {
+    if (_hasFocus) {
+      return 'secret-has-focus';
+    } else {
+      return '';
+    }
+  }
+
   Stream<Event> get onInput => inputEvent.forTarget(this);
   Stream<Event> get onBlur => blurEvent.forTarget(this);
   Stream<Event> get onFocus => focusEvent.forTarget(this);
