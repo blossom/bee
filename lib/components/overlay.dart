@@ -23,16 +23,16 @@ class State {
   const State._(this.value);
 }
 
-@observable
 class OverlayComponent extends WebComponent {
-
+  static const EventStreamProvider<Event> showEvent = const EventStreamProvider<Event>('show');
+  static const EventStreamProvider<Event> hideEvent = const EventStreamProvider<Event>('hide');
   StreamSubscription clickSubscription;
   StreamSubscription touchSubscription;
   StreamSubscription keySubscription;
-  String elementTimestamp;
   String width = "600px";
   DivElement _backdrop;
-  State state = State.DEACTIVE;
+  @observable String elementTimestamp;
+  @observable State state = State.DEACTIVE;
 
   void created() {
     this._add_scrollbar_info();
@@ -55,6 +55,9 @@ class OverlayComponent extends WebComponent {
   void removed() {
     this._hide();
   }
+
+  Stream<Event> get onShow => showEvent.forTarget(this);
+  Stream<Event> get onHide => hideEvent.forTarget(this);
 
   void _add_scrollbar_info() {
     // scrollbar width detection
@@ -96,22 +99,27 @@ class OverlayComponent extends WebComponent {
   _updateState(var state) {
     this.state = state;
     if (this.state == State.ACTIVE) {
-      this._backdrop.style.display = 'block';
-      // the attribute elementTimestamp represents the time the popover was activated which is important for 2 reasons
-      // * identify the overlay in the dom
-      // * find out which layer/element to close on esc
-      // this implmentation assumes that multiple elements can't be activated at the exact same millisecond
-      this.elementTimestamp = new DateTime.now().millisecondsSinceEpoch.toString();
-      query("html").classes.add('overlay-backdrop-active');
-      this.clickSubscription = document.onClick.listen(null);
-      this.clickSubscription.onData(this._removeClickHandler);
-      this.touchSubscription = document.onTouchStart.listen(null);
-      this.touchSubscription.onData(this._removeClickHandler);
-      this.keySubscription = window.onKeyUp.listen(null);
-      this.keySubscription.onData(this._keyHandler);
+      this._show();
     } else {
       this._hide();
     }
+  }
+
+  void _show() {
+    this._backdrop.style.display = 'block';
+    // the attribute elementTimestamp represents the time the popover was activated which is important for 2 reasons
+    // * identify the overlay in the dom
+    // * find out which layer/element to close on esc
+    // this implmentation assumes that multiple elements can't be activated at the exact same millisecond
+    this.elementTimestamp = new DateTime.now().millisecondsSinceEpoch.toString();
+    query("html").classes.add('overlay-backdrop-active');
+    this.clickSubscription = document.onClick.listen(null);
+    this.clickSubscription.onData(this._removeClickHandler);
+    this.touchSubscription = document.onTouchStart.listen(null);
+    this.touchSubscription.onData(this._removeClickHandler);
+    this.keySubscription = window.onKeyUp.listen(null);
+    this.keySubscription.onData(this._keyHandler);
+    this.dispatchEvent(new Event("show"));
   }
 
   void _hide() {
@@ -129,6 +137,7 @@ class OverlayComponent extends WebComponent {
       // to reenable scrolling we reset the body's style attribute (but only if we are hiding the last overlay)
       query("html").classes.remove('overlay-backdrop-active');
     }
+    this.dispatchEvent(new Event("hide"));
   }
 
   void _keyHandler(KeyboardEvent event) {
