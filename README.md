@@ -12,20 +12,29 @@ dependencies:
   bee: any
 ```
 
+##Getting started
+
 To use a component you need to import it via a link tag.
 
 ```html
 <link rel="import" href="package:bee/components/button.html">
-<link rel="import" href="package:bee/components/secret.html">
-<link rel="import" href="package:bee/components/loading.html">
-<link rel="import" href="package:bee/components/popover.html">
-<link rel="import" href="package:bee/components/overlay.html">
-<link rel="import" href="package:bee/components/button.html">
 ```
+
+Add the custom Bee element inside the same file where you imported the component.
+
+```html
+<b-button>Primary</b-button>
+```
+
+You might want to check out the [example](https://github.com/blossom/bee/tree/master/example).
 
 ##Components
 
 ###Button
+
+```html
+<link rel="import" href="package:bee/components/button.html">
+```
 
 ```html
 <b-button>Primary</b-button>
@@ -34,16 +43,28 @@ To use a component you need to import it via a link tag.
 ###Show Password
 
 ```html
+<link rel="import" href="package:bee/components/secret.html">
+```
+
+```html
 <b-secret placeholder="Enter your Password"></b-secret>
 ```
 
 ###Loading Indicator
 
 ```html
+<link rel="import" href="package:bee/components/loading.html">
+```
+
+```html
 <b-loading></b-loading>
 ```
 
 ###Popover
+
+```html
+<link rel="import" href="package:bee/components/popover.html">
+```
 
 ```html
 <b-popover>
@@ -53,6 +74,10 @@ To use a component you need to import it via a link tag.
 ```
 
 ###Overlay
+
+```html
+<link rel="import" href="package:bee/components/overlay.html">
+```
 
 ```html
 <span on-click="query('.q-example-overlay').xtag.show()" on-touch-start="query('.q-example-overlay').xtag.show()">Launch Overlay</span>
@@ -80,7 +105,7 @@ Note: Pressing 'ESC' closes popovers as well as overlays but only closes the you
 </b-overlay>
 ```
 
-##Coming Soon …
+##Coming Soon
 
 This is just the initial release and we'll add a bunch of additional components, examples, documentation and polish going forward :)
 
