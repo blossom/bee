@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bee Examples</title>
+    <link rel="import" href="package:bee/components/button.html">
+    <link rel="import" href="package:bee/components/secret.html">
+    <link rel="import" href="package:bee/components/overlay.html">
+    <style>
+      html {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p>Click to Button to the overlay containing our form.</p>
+    <!-- The button is used show the form overlay -->
+    <b-button type="button" on-click="query('.q-example-form').xtag.show()" on-touch-start="query('.q-example-form').xtag.show()">Open the Form</b-button>
+
+    <!-- To add content to the overlay just add it between the open and the close tag -->
+    <b-overlay width="600px" class="q-example-form">
+      <h2>Example Overlay</h2>
+      <p>This Overlay contains a 'b-secret' elmenet and a 'b-button' of type submit.</p>
+
+      <form on-submit="window.alert('You have submitted the form.')">
+        <b-secret></b-secret>
+        <!-- The button has the type submit which actually will submit the form. -->
+        <b-button type="submit" look="primary">Save</b-button>
+      </form>
+    </b-overlay>
+
+    <script type="application/dart" src="index.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>
