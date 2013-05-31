@@ -1,5 +1,6 @@
 .DS_Store
 packages
 web/out
+example/out
 pubspec.lock
 .buildlog
