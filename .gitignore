@@ -2,5 +2,6 @@
 packages
 web/out
 example/out
+test/out
 pubspec.lock
 .buildlog
