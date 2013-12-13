@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 import 'package:web_ui/web_ui.dart';
+import 'package:escape_handler/escape_handler.dart';
 
 /*
  *
@@ -24,15 +25,15 @@ class State {
 }
 
 class OverlayComponent extends WebComponent {
-  static const EventStreamProvider<Event> showEvent = const EventStreamProvider<Event>('show');
-  static const EventStreamProvider<Event> hideEvent = const EventStreamProvider<Event>('hide');
+  static const EventStreamProvider<CustomEvent> showEvent = const EventStreamProvider<CustomEvent>('show');
+  static const EventStreamProvider<CustomEvent> hideEvent = const EventStreamProvider<CustomEvent>('hide');
   StreamSubscription clickSubscription;
   StreamSubscription touchSubscription;
-  StreamSubscription keySubscription;
   String width = "600px";
   DivElement _backdrop;
-  @observable String elementTimestamp;
+  @observable String elementTimestamp = "0";
   @observable State state = State.DEACTIVE;
+  EscapeHandler _escapeHandler = new EscapeHandler();
 
   void created() {
     this._add_scrollbar_info();
@@ -56,15 +57,25 @@ class OverlayComponent extends WebComponent {
     this._hide();
   }
 
-  Stream<Event> get onShow => showEvent.forTarget(this);
-  Stream<Event> get onHide => hideEvent.forTarget(this);
+  Stream<CustomEvent> get onShow => showEvent.forTarget(this);
+  Stream<CustomEvent> get onHide => hideEvent.forTarget(this);
 
+  /*
+   * Scollbar width detection. Adds either the class scrollbar0, scrollbar15 or scrollbar20
+   * to the body element.
+   *
+   * See http://jdsharp.us/jQuery/minute/calculate-scrollbar-width.php
+   */
   void _add_scrollbar_info() {
-    // scrollbar width detection
-    // http://jdsharp.us/jQuery/minute/calculate-scrollbar-width.php
-    Element div = new Element.html('<div style="width:50px;height:50px;overflow:hidden;position:absolute;top:-200px;left:-200px;"><div style="height:100px;"></div>');
+    var validator = new NodeValidatorBuilder()..allowElement('div', attributes: ['style']);
+    var template = """
+    <div style="width:50px;height:50px;overflow:hidden;position:absolute;top:-200px;left:-200px;">
+      <div style="height:100px;">
+    </div>
+    """;
+    Element div = new Element.html(template, validator: validator);
     // append the div, do the calculation and then remove it
-    query('body').append(div);
+    querySelector('body').append(div);
     int width1 = div.clientWidth;
     div.style.overflowY = 'scroll';
     int width2 = div.clientWidth;
@@ -72,18 +83,21 @@ class OverlayComponent extends WebComponent {
     int scrollbarWidth = width1 - width2;
     switch (scrollbarWidth) {
       case 0:
-        query('body').classes.add('scrollbar0');
+        querySelector('body').classes.add('scrollbar0');
         break;
       case 20:
-        query('body').classes.add('scrollbar20');
+        querySelector('body').classes.add('scrollbar20');
         break;
       default:
-        query('body').classes.add('scrollbar15');
+        querySelector('body').classes.add('scrollbar15');
     }
   }
 
+  /*
+   * Close the overlay in case the user clicked outside of the overlay
+   * content area.
+   */
   void _removeClickHandler(event) {
-    // close the overlay in case the user clicked outside of the overlay content area
     Element backdrop;
     if (event.target.classes.contains('q-b-overlay-backdrop')) {
       backdrop = event.target;
@@ -112,50 +126,33 @@ class OverlayComponent extends WebComponent {
     // * find out which layer/element to close on esc
     // this implmentation assumes that multiple elements can't be activated at the exact same millisecond
     this.elementTimestamp = new DateTime.now().millisecondsSinceEpoch.toString();
-    query("html").classes.add('overlay-backdrop-active');
+    var hideFuture = _escapeHandler.addWidget(int.parse(elementTimestamp));
+    hideFuture.then((_) {
+      _updateState(State.DEACTIVE);
+    });
+    querySelector("html").classes.add('overlay-backdrop-active');
     this.clickSubscription = document.onClick.listen(null);
     this.clickSubscription.onData(this._removeClickHandler);
     this.touchSubscription = document.onTouchStart.listen(null);
     this.touchSubscription.onData(this._removeClickHandler);
-    this.keySubscription = window.onKeyUp.listen(null);
-    this.keySubscription.onData(this._keyHandler);
-    this.dispatchEvent(new Event("show"));
+    this.dispatchEvent(new CustomEvent("show"));
   }
 
   void _hide() {
     this._backdrop.style.display = 'none';
+    _escapeHandler.removeWidget(int.parse(elementTimestamp));
     // the element is deactive and we give it 0 as timestamp to make sure
     // you can't find it by getting the max of all elements with the data attribute
     this.elementTimestamp = "0";
     if (this.clickSubscription != null) { try { this.clickSubscription.cancel(); } on StateError {}; }
     if (this.touchSubscription != null) { try { this.touchSubscription.cancel(); } on StateError {}; }
-    if (this.keySubscription != null) { try { this.keySubscription.cancel(); } on StateError {}; }
-    List<Element> backdrops = queryAll('.q-b-overlay-backdrop');
+    List<Element> backdrops = querySelectorAll('.q-b-overlay-backdrop');
     // TODO check for visible getter in the future, see https://code.google.com/p/dart/issues/detail?id=6526
     Iterable<Element> visibleBackdrops = backdrops.where((Element backdrop) => backdrop.style.display != 'none');
     if (visibleBackdrops.length == 0) {
       // to reenable scrolling we reset the body's style attribute (but only if we are hiding the last overlay)
-      query("html").classes.remove('overlay-backdrop-active');
+      querySelector("html").classes.remove('overlay-backdrop-active');
     }
-    this.dispatchEvent(new Event("hide"));
-  }
-
-  void _keyHandler(KeyboardEvent event) {
-    // expected app behavior: when ESC is pressed only the latest active element handles ESC
-    //
-    // this function removes this overlay in case it is the youngest in the dom
-    // which is determinded by the data attribute elementTimestamp
-    //
-    // TODO: potential race condition!
-    // if we have two overlays (A & B) and the topmost overlay (A) manages to
-    // remove itself from the dom before the second overlay (B) can query for all overlays (A & B)
-    // it will remove itself
-    if (event.keyCode == 27) {
-      Iterable<int> escElements = queryAll('[data-element-timestamp]').map((element) => int.parse(element.dataset['element-timestamp']));
-      String youngestEscElement = escElements.fold(0, (prev, element) => (prev > element) ? prev : element).toString();
-      if (youngestEscElement == this.elementTimestamp) {
-        this._updateState(State.DEACTIVE);
-      }
-    }
+    this.dispatchEvent(new CustomEvent("hide"));
   }
 }
