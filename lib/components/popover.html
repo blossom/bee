@@ -8,14 +8,10 @@
   <element name="b-popover" constructor="PopoverComponent" extends="div">
     <template>
       <style>
-        .b-popover-wrapper {
-            position: relative;
-        }
         .b-popover-dialog {
             position: absolute;
             top: 8px;
             z-index: 999;
-            width: 213px;
             border: 1px solid #cccccc;
             -moz-box-shadow: -1px 1px 1px rgba(0,0,0,.2);
             -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.2);
@@ -26,7 +22,6 @@
         .b-popover-arrow {
             position: absolute;
             top: -16px;
-            left: 20px;
         }
 
         span.b-popover-arrow-up-outline {
@@ -47,18 +42,17 @@
             margin-top: -15px;
         }
         .b-popover-body {
-            padding: 15px;
+            padding: 0;
         }
-        .x-launch-area {
+        .x-popover-launch-area {
             display: inline;
         }
-        .x-launch-area:hover {
+        .x-popover-launch-area:hover {
             cursor: pointer;
-            color: #aaaaaa;
         }
       </style>
-      <div class="x-launch-area q-launch-area">
-        <content select=".launch-area"></content>
+      <div class="x-popover-launch-area q-launch-area">
+        <content select=".select-launch-area"></content>
       </div>
       <!-- We use disblay block/none to toggle the visibility of the popover since
            content tags inside templates don't work at the moment (Web UI 0.4.5)
@@ -80,7 +74,7 @@
             </div>
           </div>
           <div class="b-popover-body">
-            <content select=".body"></content>
+            <content select=".select-body"></content>
           </div>
           <div class="b-popover-footer"></div>
         </div>

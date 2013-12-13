@@ -4,9 +4,9 @@ import 'dart:html';
 
 @observable
 class SecretComponent extends WebComponent {
-  static const EventStreamProvider<Event> inputEvent = const EventStreamProvider<Event>('input');
-  static const EventStreamProvider<Event> blurEvent = const EventStreamProvider<Event>('blur');
-  static const EventStreamProvider<Event> focusEvent = const EventStreamProvider<Event>('focus');
+  static const EventStreamProvider<CustomEvent> inputEvent = const EventStreamProvider<CustomEvent>('input');
+  static const EventStreamProvider<CustomEvent> blurEvent = const EventStreamProvider<CustomEvent>('blur');
+  static const EventStreamProvider<CustomEvent> focusEvent = const EventStreamProvider<CustomEvent>('focus');
   String placeholder = '';
   String name = 'secret';
   bool required = false;
@@ -55,7 +55,7 @@ class SecretComponent extends WebComponent {
   }
 
   void _input() {
-    this.dispatchEvent(new Event("input"));
+    this.dispatchEvent(new CustomEvent("input"));
   }
 
   void _blur(event) {
@@ -71,7 +71,7 @@ class SecretComponent extends WebComponent {
       Element textField = getShadowRoot('b-secret').query('.q-text-field');
       Element passwordField = getShadowRoot('b-secret').query('.q-password-field');
       if (document.activeElement != textField && document.activeElement != passwordField) {
-        this.dispatchEvent(new Event("blur"));
+        this.dispatchEvent(new CustomEvent("blur"));
         this._hasFocus = false;
       }
     });
@@ -79,7 +79,7 @@ class SecretComponent extends WebComponent {
 
   void _focus(event) {
     if (!this._hasFocus) {
-      this.dispatchEvent(new Event("focus"));
+      this.dispatchEvent(new CustomEvent("focus"));
     }
     this._hasFocus = true;
   }
@@ -112,7 +112,7 @@ class SecretComponent extends WebComponent {
     }
   }
 
-  Stream<Event> get onInput => inputEvent.forTarget(this);
-  Stream<Event> get onBlur => blurEvent.forTarget(this);
-  Stream<Event> get onFocus => focusEvent.forTarget(this);
+  Stream<CustomEvent> get onInput => inputEvent.forTarget(this);
+  Stream<CustomEvent> get onBlur => blurEvent.forTarget(this);
+  Stream<CustomEvent> get onFocus => focusEvent.forTarget(this);
 }

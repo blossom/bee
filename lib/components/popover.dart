@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 import 'package:web_ui/web_ui.dart';
+import 'package:escape_handler/escape_handler.dart';
 import '../utils/html_helpers.dart';
 
 class State {
@@ -13,18 +14,21 @@ class State {
 
 @observable
 class PopoverComponent extends WebComponent {
+  static const EventStreamProvider<CustomEvent> showEvent = const EventStreamProvider<CustomEvent>('show');
+  static const EventStreamProvider<CustomEvent> hideEvent = const EventStreamProvider<CustomEvent>('hide');
 
   StreamSubscription documentClick;
   StreamSubscription documentTouch;
   StreamSubscription toggleClick;
   StreamSubscription toggleTouch;
-  StreamSubscription keySubscription;
-  String elementTimestamp;
+  String elementTimestamp = "0";
   String width;
   State state = State.DEACTIVE;
   DivElement _popoverWrapper;
+  EscapeHandler _escapeHandler = new EscapeHandler();
 
   // CSS Styles
+  String position = "relative";
   String left;
   String right;
   String top;
@@ -46,8 +50,6 @@ class PopoverComponent extends WebComponent {
     this.toggleClick.onData(this.toggle);
     this.toggleTouch = getShadowRoot('b-popover').query('.q-launch-area').onTouchStart.listen(null);
     this.toggleTouch.onData(this.toggle);
-    this.keySubscription = window.onKeyUp.listen(null);
-    this.keySubscription.onData(this._keyHandler);
   }
 
   void removed() {
@@ -66,8 +68,12 @@ class PopoverComponent extends WebComponent {
     }
   }
 
+  Stream<CustomEvent> get onShow => showEvent.forTarget(this);
+  Stream<CustomEvent> get onHide => hideEvent.forTarget(this);
+
   void _setCssStyles() {
     Element arrow = getShadowRoot('b-popover').query('.q-b-popover-arrow');
+    if (this.position != null) { this._popoverWrapper.style.position = this.position; }
     if (this.left != null) { this._popoverWrapper.style.left = this.left; }
     if (this.right != null) { this._popoverWrapper.style.right = this.right; }
     if (this.top != null) { this._popoverWrapper.style.top = this.top; }
@@ -78,49 +84,38 @@ class PopoverComponent extends WebComponent {
     if (this.arrowBottom != null) { arrow.style.bottom = this.arrowBottom; }
   }
 
-  void _hideClickHandler(event) {
+  void _hideClickHandler(Event event) {
     // close the overlay in case the user clicked outside of the overlay content area
     // only exception is when the user clicked on the toggle area (this case is handled by toggle)
-    bool clickOutsidePopover = !insideOrIsNodeWhere(event.target, (element) => element.dataset['element-timestamp'] == this.elementTimestamp);
-    bool clickOnToggleArea = insideOrIsNodeWhere(event.target, (element) => element.classes.contains('q-launch-area'));
+    bool clickOutsidePopover = !insideOrIsNodeWhere(event.target, (element) => element.hashCode == _popoverWrapper.hashCode);
+    Element launchArea = getShadowRoot('b-popover').query('.q-launch-area');
+    bool clickOnToggleArea = insideOrIsNodeWhere(event.target, (element) => element.hashCode == launchArea.hashCode);
     if (clickOutsidePopover && !clickOnToggleArea) {
       _updateState(State.DEACTIVE);
     }
   }
 
-  _updateState(var state) {
-    this.state = state;
-    if (this.state == State.ACTIVE) {
+  void _updateState(var newState) {
+    state = newState;
+    if (state == State.ACTIVE) {
       this._popoverWrapper.style.display = 'block';
       // the attribute elementTimestamp represents the time the popover was activated which is important for 2 reasons
       // * identify the popover in the dom
       // * find out which layer to close on esc
       // this implmentation assumes that multiple elements can't be activated at the exact same millisecond
       this.elementTimestamp = new DateTime.now().millisecondsSinceEpoch.toString();
+      var deactivateFuture = _escapeHandler.addWidget(int.parse(elementTimestamp));
+      deactivateFuture.then((_) {
+        _updateState(State.DEACTIVE);
+      });
+      dispatchEvent(new CustomEvent("show"));
     } else {
-      this._popoverWrapper.style.display = 'none';
+      _popoverWrapper.style.display = 'none';
+      _escapeHandler.removeWidget(int.parse(elementTimestamp));
       // the element is deactive and we give it 0 as timestamp to make sure
       // you can't find it by getting the max of all elements with the data attribute
-      this.elementTimestamp = "0";
-    }
-  }
-
-  void _keyHandler(KeyboardEvent event) {
-    // expected app behavior: when ESC is pressed only the latest active element handles ESC
-    //
-    // this function removes this popover in case it is the youngest in the dom
-    // which is determinded by the data attribute elementTimestamp
-    //
-    // TODO: potential race condition!
-    // if we have two overlays (A & B) and the topmost overlay (A) manages to
-    // remove itself from the dom before the second overlay (B) can query for all overlays (A & B)
-    // it will remove itself
-    if (event.keyCode == 27) {
-      Iterable<int> escElements = queryAll('[data-element-timestamp]').map((element) => int.parse(element.dataset['element-timestamp']));
-      String youngestEscElement = escElements.fold(0, (prev, element) => (prev > element) ? prev : element).toString();
-      if (youngestEscElement == this.elementTimestamp) {
-        this._updateState(State.DEACTIVE);
-      }
+      elementTimestamp = "0";
+      dispatchEvent(new CustomEvent("hide"));
     }
   }
 }
