@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+  <body>
+    <element name="b-textarea" constructor="TextareaComponent" extends="div">
+      <template>
+        <style>
+          .b-textarea-textarea {
+            resize: none;
+            width: 100%;
+            height: 0px;
+            margin: 0;
+            padding: 0;
+            color: #505050;
+            border: 0px #fff solid;
+            background: none;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            /* with display inline the b-textarea would
+            use up more space than needed at the bottom */
+            display: block;
+          }
+
+          .b-textarea-shadow {
+            position: absolute;
+            /* moving shadow out of the visible screen so it doesn't
+            displace other content after the text area */
+            top: -10000px;
+            white-space: pre-wrap;
+            visibility: hidden;
+            word-wrap: break-word;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+          }
+
+        </style>
+        <textarea class="b-textarea-textarea q-textarea-textarea"
+                  bind-value="value"
+                  on-input="resize()"
+                  on-blur="_blur($event)"
+                  on-focus="_focus($event)"
+                  placeholder="{{placeholder}}">
+        </textarea>
+        <div class="b-textarea-shadow q-textarea-shadow"></div>
+      </template>
+      <script type="application/dart" src="textarea.dart"></script>
+    </element>
+  </body>
+</html>
