@@ -87,6 +87,26 @@ You might want to check out the [example](https://github.com/blossom/bee/tree/ma
 </b-overlay>
 ```
 
+### Tooltip
+
+```html
+<link rel="import" href="package:bee/components/tooltip.html">
+```
+
+```html
+<b-tooltip></b-tooltip>
+```
+
+### Textarea (growable)
+
+```html
+<link rel="import" href="package:bee/components/tooltip.html">
+```
+
+```html
+<b-textarea value="Edit me!"></b-textarea>
+```
+
 ## Nexted Example
 
 A button which opens an overlay on click. The overlay contains a popover.
@@ -109,6 +129,6 @@ Note: Pressing 'ESC' closes popovers as well as overlays but only closes the you
 
 This is just the initial release and we'll add a bunch of additional components, examples, documentation and polish going forward :)
 
+* Convert to Polymer.dart
 * Tests, Tests, Tests
-* Component: Tooltip
 * Component: Date Picker
