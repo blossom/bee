@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html>
+  <body>
+    <element name="b-tooltip" constructor="TooltipComponent" extends="div">
+      <template>
+        <style>
+          .b-tooltip-wrapper {
+            position: absolute;
+            z-index: 1030;
+            display: block;
+            font-size: 12px;
+            line-height: 1.4;
+            opacity: 1;
+            filter: alpha(opacity=0);
+            visibility: visible;
+          }
+
+          .b-tooltip-wrapper.b-tooltip-in {
+            opacity: 0.8;
+            filter: alpha(opacity=80);
+          }
+
+          .b-tooltip-wrapper.b-tooltip-top {
+            padding: 5px 0;
+            margin-top: -3px;
+          }
+
+          .b-tooltip-wrapper.b-tooltip-right {
+            padding: 0 5px;
+            margin-left: 3px;
+          }
+
+          .b-tooltip-wrapper.b-tooltip-bottom {
+            padding: 5px 0;
+            margin-top: 3px;
+          }
+
+          .b-tooltip-wrapper.b-tooltip-left {
+            padding: 0 5px;
+            margin-left: -3px;
+          }
+
+          .b-tooltip-inner {
+            max-width: 200px;
+            padding: 3px 8px;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            background-color: #000000;
+            -webkit-border-radius: 4px;
+               -moz-border-radius: 4px;
+                    border-radius: 4px;
+          }
+
+          .b-tooltip-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-color: transparent;
+            border-style: solid;
+          }
+
+          .b-tooltip-wrapper.b-tooltip-top .b-tooltip-arrow {
+            bottom: 0;
+            left: 50%;
+            margin-left: -5px;
+            border-top-color: #000000;
+            border-width: 5px 5px 0;
+          }
+
+          .b-tooltip-wrapper.b-tooltip-right .b-tooltip-arrow {
+            top: 50%;
+            left: 0;
+            margin-top: -5px;
+            border-right-color: #000000;
+            border-width: 5px 5px 5px 0;
+          }
+
+          .b-tooltip-wrapper.b-tooltip-left .b-tooltip-arrow {
+            top: 50%;
+            right: 0;
+            margin-top: -5px;
+            border-left-color: #000000;
+            border-width: 5px 0 5px 5px;
+          }
+
+          .b-tooltip-wrapper.b-tooltip-bottom .b-tooltip-arrow {
+            top: 0;
+            left: 50%;
+            margin-left: -5px;
+            border-bottom-color: #000000;
+            border-width: 0 5px 5px;
+          }
+
+        </style>
+        <div class="b-tooltip-wrapper q-tooltip b-tooltip-bottom b-tooltip-in">
+          <div class="b-tooltip-arrow"></div>
+          <div class="b-tooltip-inner">
+            <content></content>
+          </div>
+        </div>
+      </template>
+      <script type="application/dart" src="tooltip.dart"></script>
+    </element>
+  </body>
+</html>
