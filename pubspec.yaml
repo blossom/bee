@@ -1,12 +1,11 @@
 name: bee
-version: 0.0.2
 authors:
 - Allan Berger <allan@blossom.io>
 - Nik Graf <nik@blossom.io>
 - Thomas Schranz <thomas@blossom.io>
-description: A Collection of lightweight Dart Web UI Components
+version: 0.0.2
 homepage: https://www.blossom.io/bee
+description: A Collection of lightweight Dart Web UI Components
 dependencies:
-  web_ui: ">=0.4.8 <0.5.0"
-dev_dependencies:
-  unittest: '>=0.5.7 <0.6.0'
+  escape_handler: '>=0.0.2 <0.1.0'
+  web_ui: '>=0.4.28 <0.5.0'
