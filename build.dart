@@ -1,8 +1,5 @@
-import 'dart:io';
-import 'package:web_ui/component_build.dart';
+import 'package:polymer/builder.dart';
 
-// Ref: http://www.dartlang.org/articles/dart-web-components/tools.html
-main() {
-  // build(new Options().arguments, ['example/index.html']);
-  build(new Options().arguments, ['test/index.html']);
+void main(List<String> args) {
+ lint(entryPoints: ['example/button/index.html'], options: parseOptions(args));
 }
