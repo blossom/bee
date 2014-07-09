@@ -2,3 +2,39 @@
   border: none;
   background:none;
 }
+
+@-webkit-keyframes b-loading-dot {
+      0% { opacity: 1; }
+     50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes b-loading-dot {
+      0% { opacity: 1; }
+     50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.b-loading-one {
+    opacity: 1;
+    -webkit-animation: b-loading-dot 1.3s infinite;
+    -webkit-animation-delay: 0.0s;
+    animation: b-loading-dot 1.3s infinite;
+    animation-delay: 0.0s;
+}
+
+.b-loading-two {
+    opacity: 1;
+    -webkit-animation: b-loading-dot 1.3s infinite;
+    -webkit-animation-delay: 0.2s;
+    animation: b-loading-dot 1.3s infinite;
+    animation-delay: 0.2s;
+}
+
+.b-loading-three {
+    opacity: 1;
+    -webkit-animation: b-loading-dot 1.3s infinite;
+    -webkit-animation-delay: 0.3s;
+    animation: b-loading-dot 1.3s infinite;
+    animation-delay: 0.3s;
+}
