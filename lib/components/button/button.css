@@ -396,6 +396,11 @@
   outline-offset: -2px;
 }
 
+.btn-link.btn-large:active {
+  position: relative;
+  top: 1px;
+}
+
 .btn-small {
   font-family: "ff-kievit-web-pro-1", "ff-kievit-web-pro-2", sans-serif;
   -webkit-border-radius: 2px;
