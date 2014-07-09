@@ -305,7 +305,15 @@
 }
 
 .btn-primary.btn-medium {
+  height: 28px;
+  line-height: 30px;
+  font-size: 14px;
+  padding: 0 10px;
+}
 
+.btn-primary.btn-medium:active {
+  height: 28px;
+  line-height: 30px;
 }
 
 .btn-link {
