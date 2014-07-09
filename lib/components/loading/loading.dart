@@ -7,9 +7,7 @@ class BeeLoading extends PolymerElement {
   @published String color;
   String _defaultColor = "#505050";
 
-  BeeLoading.created() : super.created() {
-     polymerCreated();
-  }
+  BeeLoading.created() : super.created() {}
 
   void attached() {
     // Setting the color to the default color in case no color

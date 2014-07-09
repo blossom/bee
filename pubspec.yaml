@@ -15,3 +15,4 @@ transformers:
    entry_points:
      - example/button/index.html
      - example/loading/index.html
+     - example/popover/index.html
