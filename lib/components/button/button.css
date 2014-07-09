@@ -336,6 +336,7 @@
   border: none;
   text-decoration: underline;
   color: #505050;
+  cursor: pointer;
 }
 
 .btn-link:active {
