@@ -104,7 +104,7 @@ class OverlayComponent extends WebComponent {
     } else if (event.target.classes.contains('q-b-overlay-backdrop-close')) {
       backdrop = event.target.parent;
     }
-    if (backdrop != null && backdrop.contains(getShadowRoot('b-overlay').query('.q-overlay[data-element-timestamp="${this.elementTimestamp}"]'))) {
+    if (backdrop != null && backdrop.contains(getShadowRoot('b-overlay').query('.q-overlay'))) {
       event.preventDefault();
       _updateState(State.DEACTIVE);
     }

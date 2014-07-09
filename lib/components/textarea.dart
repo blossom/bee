@@ -107,8 +107,10 @@ class TextareaComponent extends WebComponent {
 
     var newHeight;
     if (minHeight != null) {
-      var height = int.parse(_shadowHeight.replaceAll('px', ''));
-      newHeight = '${max(height, int.parse(minHeight))}px';
+      // There are edge cases where pixel values can have decimal places. That's
+      // why we parse the num and then round to int.
+      var height = num.parse(_shadowHeight.replaceAll('px', '')).round();
+      newHeight = '${max(height, num.parse(minHeight).round())}px';
     } else {
       newHeight = _shadowHeight;
     }

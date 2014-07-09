@@ -6,7 +6,7 @@
       <template>
         <style>
           .b-tooltip-wrapper {
-            position: absolute;
+            position: relative;
             z-index: 1030;
             display: block;
             font-size: 12px;
@@ -23,26 +23,21 @@
 
           .b-tooltip-wrapper.b-tooltip-top {
             padding: 5px 0;
-            margin-top: -3px;
           }
 
           .b-tooltip-wrapper.b-tooltip-right {
             padding: 0 5px;
-            margin-left: 3px;
           }
 
           .b-tooltip-wrapper.b-tooltip-bottom {
             padding: 5px 0;
-            margin-top: 3px;
           }
 
           .b-tooltip-wrapper.b-tooltip-left {
             padding: 0 5px;
-            margin-left: -3px;
           }
 
           .b-tooltip-inner {
-            max-width: 200px;
             padding: 3px 8px;
             color: #ffffff;
             text-align: center;
@@ -96,7 +91,7 @@
         </style>
         <div class="b-tooltip-wrapper q-tooltip b-tooltip-bottom b-tooltip-in">
           <div class="b-tooltip-arrow"></div>
-          <div class="b-tooltip-inner">
+          <div class="b-tooltip-inner q-tooltip-inner">
             <content></content>
           </div>
         </div>
