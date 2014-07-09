@@ -1,6 +1,9 @@
 :host {
   border: none;
   background: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
 }
 
 /* button sizes */

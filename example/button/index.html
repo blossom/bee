@@ -8,19 +8,33 @@
     <script src="packages/web_components/platform.js"></script>
     <script src="packages/web_components/dart_support.js"></script>
     <link rel="import" href="../../lib/components/button/button.html" />
+    <style>
+      div {
+        margin-bottom: 10px;
+      }
+      button {
+        margin-right: 20px;
+      }
+    </style>
   </head>
 
   <body unresolved>
     <h1>b-button example</h1>
-    <button is="b-button" size="small">Click me</button>
-    <button is="b-button" size="small" look="link">Click me</button>
-    <button is="b-button" size="small" look="primary">Click me</button><br />
-    <button is="b-button" size="medium">Click me</button>
-    <button is="b-button" size="medium" look="link">Click me</button>
-    <button is="b-button" size="medium" look="primary">Click me</button><br />
-    <button is="b-button" size="large">Click me</button>
-    <button is="b-button" size="large" look="link">Click me</button>
-    <button is="b-button" size="large" look="primary">Click me</button>
+    <div>
+      <button is="b-button" size="small">Click me</button>
+      <button is="b-button" size="small" look="link">Click me</button>
+      <button is="b-button" size="small" look="primary">Click me</button>
+    </div>
+    <div>
+      <button is="b-button" size="medium">Click me</button>
+      <button is="b-button" size="medium" look="link">Click me</button>
+      <button is="b-button" size="medium" look="primary">Click me</button>
+    </div>
+    <div>
+      <button is="b-button" size="large">Click me</button>
+      <button is="b-button" size="large" look="link">Click me</button>
+      <button is="b-button" size="large" look="primary">Click me</button>
+    </div>
     <!-- <script type="application/dart" src="index.dart"></script>-->
     <!-- for this next line to work, your pubspec.yaml file must have a dependency on 'browser' -->
     <script type="application/dart">export 'package:polymer/init.dart';</script>
