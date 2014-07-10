@@ -41,10 +41,10 @@ class BeePopover extends PolymerElement {
   void attached() {
     _updateState(_state);
     _setCssStyles();
-    _documentClick = document.onClick.listen(null);
-    _documentClick.onData(_hideClickHandler);
-    _documentTouch = document.onTouchStart.listen(null);
-    _documentTouch.onData(_hideClickHandler);
+//    _documentClick = document.onClick.listen(null);
+//    _documentClick.onData(_hideClickHandler);
+//    _documentTouch = document.onTouchStart.listen(null);
+//    _documentTouch.onData(_hideClickHandler);
     _toggleClick = shadowRoot.querySelector('.q-launch-area').onClick.listen(null);
     _toggleClick.onData(toggle);
     _toggleTouch = shadowRoot.querySelector('.q-launch-area').onTouchStart.listen(null);
@@ -73,7 +73,6 @@ class BeePopover extends PolymerElement {
   }
 
   void toggle(event) {
-    print('toggle');
     if (event != null) {event.preventDefault(); }
     if (_state == State.ACTIVE) {
       _updateState(State.DEACTIVE);
@@ -83,11 +82,13 @@ class BeePopover extends PolymerElement {
   }
 
   void _updateState(var newState) {
-    print(newState == State.ACTIVE);
     Element popoverWrapper = shadowRoot.querySelector('.q-b-popover-wrapper');
     _state = newState;
     if (_state == State.ACTIVE) {
+      print(popoverWrapper.style.display);
       popoverWrapper.style.display = 'block';
+      print(popoverWrapper.style.display);
+      window.console.log(popoverWrapper);
       // the attribute elementTimestamp represents the time the popover was activated which is important for 2 reasons
       // * identify the popover in the dom
       // * find out which layer to close on esc
@@ -100,6 +101,7 @@ class BeePopover extends PolymerElement {
       dispatchEvent(new CustomEvent("show"));
     } else {
       popoverWrapper.style.display = 'none';
+      print('hidden again');
       _escapeHandler.removeWidget(elementTimestamp);
       // the element is deactive and we give it 0 as timestamp to make sure
       // you can't find it by getting the max of all elements with the data attribute
@@ -109,12 +111,16 @@ class BeePopover extends PolymerElement {
   }
 
   void _hideClickHandler(Event event) {
+    print('hide handler');
     Element popoverWrapper = shadowRoot.querySelector('.q-b-popover-wrapper');
     // close the overlay in case the user clicked outside of the overlay content area
     // only exception is when the user clicked on the toggle area (this case is handled by toggle)
-    bool clickOutsidePopover = !insideOrIsNodeWhere(event.target, (element) => element.hashCode == popoverWrapper.hashCode);
+    print('popoverwrapper: ' + popoverWrapper.className);
+    bool clickOutsidePopover = !insideOrIsNodeWhere(event.target, (element) => element.className == popoverWrapper.className);
     Element launchArea = shadowRoot.querySelector('.q-launch-area');
-    bool clickOnToggleArea = insideOrIsNodeWhere(event.target, (element) => element.hashCode == launchArea.hashCode);
+    print(event.target.className);
+    print('launcharea: ' + launchArea.className);
+    bool clickOnToggleArea = insideOrIsNodeWhere(event.target, (element) => element.className == launchArea.className);
     if (clickOutsidePopover && !clickOnToggleArea) {
       _updateState(State.DEACTIVE);
     }
