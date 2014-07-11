@@ -7,7 +7,7 @@ import '../../utils/html_helpers.dart';
 
 class State {
   static const ACTIVE = const State._(0);
-  static const DEACTIVE = const State._(1);
+  static const INACTIVE = const State._(1);
 
   final int value;
   const State._(this.value);
@@ -33,7 +33,7 @@ class BeePopover extends PolymerElement {
   StreamSubscription _documentTouch;
   StreamSubscription _toggleClick;
   StreamSubscription _toggleTouch;
-  State _state = State.DEACTIVE;
+  State _state = State.INACTIVE;
   EscapeHandler _escapeHandler = new EscapeHandler();
 
   BeePopover.created() : super.created() {}
@@ -75,7 +75,7 @@ class BeePopover extends PolymerElement {
   void toggle(event) {
     if (event != null) {event.preventDefault(); }
     if (_state == State.ACTIVE) {
-      _updateState(State.DEACTIVE);
+      _updateState(State.INACTIVE);
     } else {
       _updateState(State.ACTIVE);
     }
@@ -93,7 +93,7 @@ class BeePopover extends PolymerElement {
       elementTimestamp = new DateTime.now().millisecondsSinceEpoch;
       var deactivateFuture = _escapeHandler.addWidget(elementTimestamp);
       deactivateFuture.then((_) {
-        _updateState(State.DEACTIVE);
+        _updateState(State.INACTIVE);
       });
       dispatchEvent(new CustomEvent("show"));
     } else {
@@ -118,7 +118,7 @@ class BeePopover extends PolymerElement {
     bool clickOutsideComponent = !insideOrIsNodeWhere(event.target, (element) => element.hashCode == shadowRoot.host.hashCode);
     
     if (clickOutsideComponent) {
-      _updateState(State.DEACTIVE);
+      _updateState(State.INACTIVE);
     }
   }
 
