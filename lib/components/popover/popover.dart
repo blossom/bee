@@ -43,8 +43,8 @@ class BeePopover extends PolymerElement {
     _setCssStyles();
     _documentClick = document.onClick.listen(null);
     _documentClick.onData(_hideClickHandler);
-    // _documentTouch = document.onTouchStart.listen(null);
-    // _documentTouch.onData(_hideClickHandler);
+    _documentTouch = document.onTouchStart.listen(null);
+    _documentTouch.onData(_hideClickHandler);
     _toggleClick = shadowRoot.querySelector('.q-launch-area').onClick.listen(null);
     _toggleClick.onData(toggle);
     _toggleTouch = shadowRoot.querySelector('.q-launch-area').onTouchStart.listen(null);
@@ -107,21 +107,17 @@ class BeePopover extends PolymerElement {
     }
   }
 
+  /**
+   * Close the overlay in case the user clicked outside of the overlay content area.
+   * 
+   * Only exception is when the user clicked on the toggle area (this case is handled by toggle)
+   * We can safely (?) close this popover if the user clicked outside of this component
+   * if the user clicked inside of the component we are closing it through the togglehandler.
+   */
   void _hideClickHandler(Event event) {
-    print('hide handler');
-    Element popoverWrapper = shadowRoot.querySelector('.q-b-popover-wrapper');
-    // close the overlay in case the user clicked outside of the overlay content area
-    // only exception is when the user clicked on the toggle area (this case is handled by toggle)
-    print('popoverwrapper: ' + popoverWrapper.className);
-    bool clickOutsidePopover = !insideOrIsNodeWhere(event.target, (element) => element.hashCode == shadowRoot.host.hashCode);
-    Element launchArea = document.querySelector('.select-launch-area');
-    print('click outside of popover?');
-    print(clickOutsidePopover);
-    print('launcharea: ' + launchArea.className);
-    bool clickOnToggleArea = insideOrIsNodeWhere(event.target, (element) => element.hashCode == launchArea.hashCode);
-    print('click on toggle area?');
-    print(clickOnToggleArea);
-    if (clickOutsidePopover && !clickOnToggleArea) {
+    bool clickOutsideComponent = !insideOrIsNodeWhere(event.target, (element) => element.hashCode == shadowRoot.host.hashCode);
+    
+    if (clickOutsideComponent) {
       _updateState(State.DEACTIVE);
     }
   }
