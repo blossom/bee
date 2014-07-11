@@ -41,10 +41,10 @@ class BeePopover extends PolymerElement {
   void attached() {
     _updateState(_state);
     _setCssStyles();
-//    _documentClick = document.onClick.listen(null);
-//    _documentClick.onData(_hideClickHandler);
-//    _documentTouch = document.onTouchStart.listen(null);
-//    _documentTouch.onData(_hideClickHandler);
+    _documentClick = document.onClick.listen(null);
+    _documentClick.onData(_hideClickHandler);
+    // _documentTouch = document.onTouchStart.listen(null);
+    // _documentTouch.onData(_hideClickHandler);
     _toggleClick = shadowRoot.querySelector('.q-launch-area').onClick.listen(null);
     _toggleClick.onData(toggle);
     _toggleTouch = shadowRoot.querySelector('.q-launch-area').onTouchStart.listen(null);
@@ -116,11 +116,14 @@ class BeePopover extends PolymerElement {
     // close the overlay in case the user clicked outside of the overlay content area
     // only exception is when the user clicked on the toggle area (this case is handled by toggle)
     print('popoverwrapper: ' + popoverWrapper.className);
-    bool clickOutsidePopover = !insideOrIsNodeWhere(event.target, (element) => element.className == popoverWrapper.className);
-    Element launchArea = shadowRoot.querySelector('.q-launch-area');
-    print(event.target.className);
+    bool clickOutsidePopover = !insideOrIsNodeWhere(event.target, (element) => element.hashCode == shadowRoot.host.hashCode);
+    Element launchArea = document.querySelector('.select-launch-area');
+    print('click outside of popover?');
+    print(clickOutsidePopover);
     print('launcharea: ' + launchArea.className);
-    bool clickOnToggleArea = insideOrIsNodeWhere(event.target, (element) => element.className == launchArea.className);
+    bool clickOnToggleArea = insideOrIsNodeWhere(event.target, (element) => element.hashCode == launchArea.hashCode);
+    print('click on toggle area?');
+    print(clickOnToggleArea);
     if (clickOutsidePopover && !clickOnToggleArea) {
       _updateState(State.DEACTIVE);
     }
