@@ -28,7 +28,7 @@ class BeePopover extends PolymerElement {
   @published String arrowBottom;
   static const EventStreamProvider<CustomEvent> showEvent = const EventStreamProvider<CustomEvent>('show');
   static const EventStreamProvider<CustomEvent> hideEvent = const EventStreamProvider<CustomEvent>('hide');
-  int elementTimestamp = 0;
+  @published int elementTimestamp = 0;
   StreamSubscription _documentClick;
   StreamSubscription _documentTouch;
   StreamSubscription _toggleClick;
@@ -85,10 +85,7 @@ class BeePopover extends PolymerElement {
     Element popoverWrapper = shadowRoot.querySelector('.q-b-popover-wrapper');
     _state = newState;
     if (_state == State.ACTIVE) {
-      print(popoverWrapper.style.display);
       popoverWrapper.style.display = 'block';
-      print(popoverWrapper.style.display);
-      window.console.log(popoverWrapper);
       // the attribute elementTimestamp represents the time the popover was activated which is important for 2 reasons
       // * identify the popover in the dom
       // * find out which layer to close on esc
