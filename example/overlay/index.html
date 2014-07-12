@@ -2,15 +2,20 @@
 
 <html>
   <head>
-  	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>b-popover example</title>
+    <script src="packages/web_components/platform.js"></script>
+    <script src="packages/web_components/dart_support.js"></script>
+    <link rel="import" href="../../lib/components/button/button.html" />
+    <link rel="import" href="../../lib/components/overlay/overlay.html" />
   </head>
- 
-  <body>   
-    <p id="text"></p>
-    <script type="application/dart" src="index.dart"></script>
-    <!-- for this next line to work, your pubspec.yaml file must have a dependency on 'browser' -->
+
+  <body>
+    <h1>b-overlay example</h1>
+    <div is="b-button" type="button" on-click="querySelector('.q-example-overlay').xtag.show()" on-touch-start="querySelector('.q-example-overlay').xtag.show()">Launch Overlay</div>
+
+    <script type="application/dart">export 'package:polymer/init.dart';</script>
     <script src="packages/browser/dart.js"></script>
   </body>
 </html>

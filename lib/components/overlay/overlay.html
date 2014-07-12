@@ -1,16 +1,15 @@
-<!DOCTYPE html>
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+<polymer-element name="b-overlay">
+  <template>
+    <link rel="stylesheet" href="overlay.css" />
 
-<html>
-  <head>
-  	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>overlay</title>
-  </head>
- 
-  <body>   
-    <p id="text"></p>
-    <script type="application/dart" src="overlay.dart"></script>
-    <!-- for this next line to work, your pubspec.yaml file must have a dependency on 'browser' -->
-    <script src="packages/browser/dart.js"></script>
-  </body>
-</html>
+    <div class="b-overlay-backdrop q-b-overlay-backdrop">
+      <div class="b-overlay-backdrop-close q-b-overlay-backdrop-close" title="Press ESC to close">×</div>
+      <div class="b-overlay-body q-overlay">
+        <content></content>
+      </div>
+    </div>
+
+  </template>
+  <script type="application/dart" src="overlay.dart"></script>
+</polymer-element>
