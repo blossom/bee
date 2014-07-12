@@ -80,6 +80,7 @@ class BeeTextarea extends PolymerElement {
   /**
    * Allow to set the selection range of the text carret.
    */
+  @published
   setSelectionRange(int start, int end) {
     _textarea = shadowRoot.querySelector('.q-textarea-textarea');
     _textarea.setSelectionRange(start, end);
@@ -99,11 +100,12 @@ class BeeTextarea extends PolymerElement {
    */
   void resize() {
     window.console.log('resize');
+    window.console.log(value);
+    window.console.log(_textarea.value);
 
     _shadow.style.width = _textarea.getComputedStyle().width;
     var validator = new NodeValidatorBuilder()..allowElement('br');
-    window.console.log(value);
-    _shadow.setInnerHtml(_sanitizeInput(value), validator: validator);
+    _shadow.setInnerHtml(_sanitizeInput(_textarea.value), validator: validator);
     window.console.log(_shadow);
     var _shadowHeight = _shadow.getComputedStyle().height;
 
@@ -135,13 +137,13 @@ class BeeTextarea extends PolymerElement {
 
   Stream<CustomEvent> get onBlur => blurEvent.forTarget(this);
 
-  blurHandler(Event event) {
+  handleBlur(Event event) {
     dispatchEvent(new CustomEvent("blur"));
   }
 
   Stream<CustomEvent> get onFocus => focusEvent.forTarget(this);
 
-  focusHandler(Event event) {
+  handleFocus(Event event) {
     dispatchEvent(new CustomEvent("focus"));
   }
 
