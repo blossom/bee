@@ -28,8 +28,8 @@ class State {
 class BeeOverlay extends PolymerElement {
   static const EventStreamProvider<CustomEvent> showEvent = const EventStreamProvider<CustomEvent>('show');
   static const EventStreamProvider<CustomEvent> hideEvent = const EventStreamProvider<CustomEvent>('hide');
-  StreamSubscription clickSubscription;
-  StreamSubscription touchSubscription;
+  StreamSubscription _clickSubscription;
+  StreamSubscription _touchSubscription;
   @published String width = "600px";
   DivElement _backdrop;
   @published String elementTimestamp = "0";
@@ -38,9 +38,9 @@ class BeeOverlay extends PolymerElement {
 
   BeeOverlay.created() : super.created() {}
 
-  void created() {
-    _add_scrollbar_info();
-  }
+  //  void created() {
+  //    _add_scrollbar_info();
+  //  }
 
   void attached() {
     _backdrop = shadowRoot.querySelector('.q-b-overlay-backdrop');
@@ -56,7 +56,7 @@ class BeeOverlay extends PolymerElement {
     _updateState(State.ACTIVE);
   }
 
-  void removed() {
+  void detached() {
     _hide();
   }
 
@@ -134,10 +134,10 @@ class BeeOverlay extends PolymerElement {
       _updateState(State.DEACTIVE);
     });
     querySelector("html").classes.add('overlay-backdrop-active');
-    clickSubscription = document.onClick.listen(null);
-    clickSubscription.onData(_removeClickHandler);
-    touchSubscription = document.onTouchStart.listen(null);
-    touchSubscription.onData(_removeClickHandler);
+    _clickSubscription = document.onClick.listen(null);
+    _clickSubscription.onData(_removeClickHandler);
+    _touchSubscription = document.onTouchStart.listen(null);
+    _touchSubscription.onData(_removeClickHandler);
     dispatchEvent(new CustomEvent("show"));
   }
 
@@ -147,8 +147,8 @@ class BeeOverlay extends PolymerElement {
     // the element is deactive and we give it 0 as timestamp to make sure
     // you can't find it by getting the max of all elements with the data attribute
     elementTimestamp = "0";
-    if (clickSubscription != null) { try { clickSubscription.cancel(); } on StateError {}; }
-    if (touchSubscription != null) { try { touchSubscription.cancel(); } on StateError {}; }
+    if (_clickSubscription != null) { try { _clickSubscription.cancel(); } on StateError {}; }
+    if (_touchSubscription != null) { try { _touchSubscription.cancel(); } on StateError {}; }
     List<Element> backdrops = querySelectorAll('.q-b-overlay-backdrop');
     // TODO check for visible getter in the future, see https://code.google.com/p/dart/issues/detail?id=6526
     Iterable<Element> visibleBackdrops = backdrops.where((Element backdrop) => backdrop.style.display != 'none');
