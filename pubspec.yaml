@@ -18,3 +18,4 @@ transformers:
      - example/popover/index.html
      - example/tooltip/index.html
      - example/hover-tooltip/index.html
+     - example/textarea/index.html
