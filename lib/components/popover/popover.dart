@@ -108,10 +108,10 @@ class BeePopover extends PolymerElement {
   }
 
   /**
-   * Close the overlay in case the user clicked outside of the overlay content area.
+   * Close the popover-body in case the user clicked outside of it.
    *
-   * Only exception is when the user clicked on the toggle area (this case is handled by toggle)
-   * We can safely (?) close this popover if the user clicked outside of this component
+   * The only exception is when the user clicked on the toggle area (this case is handled by toggle)
+   * We can close this popover if the user clicked outside of this component
    * if the user clicked inside of the component we are closing it through the togglehandler.
    */
   void _hideClickHandler(Event event) {
