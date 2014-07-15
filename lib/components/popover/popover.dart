@@ -28,7 +28,7 @@ class BeePopover extends PolymerElement {
   @published String arrowBottom;
   static const EventStreamProvider<CustomEvent> showEvent = const EventStreamProvider<CustomEvent>('show');
   static const EventStreamProvider<CustomEvent> hideEvent = const EventStreamProvider<CustomEvent>('hide');
-  @published int elementTimestamp = 0;
+  @observable int elementTimestamp = 0;
   StreamSubscription _documentClick;
   StreamSubscription _documentTouch;
   StreamSubscription _toggleClick;
@@ -109,14 +109,14 @@ class BeePopover extends PolymerElement {
 
   /**
    * Close the overlay in case the user clicked outside of the overlay content area.
-   * 
+   *
    * Only exception is when the user clicked on the toggle area (this case is handled by toggle)
    * We can safely (?) close this popover if the user clicked outside of this component
    * if the user clicked inside of the component we are closing it through the togglehandler.
    */
   void _hideClickHandler(Event event) {
     bool clickOutsideComponent = !insideOrIsNodeWhere(event.target, (element) => element.hashCode == shadowRoot.host.hashCode);
-    
+
     if (clickOutsideComponent) {
       _updateState(State.INACTIVE);
     }
