@@ -92,13 +92,13 @@ class BeePopover extends PolymerElement {
       // this implmentation assumes that multiple elements can't be activated at the exact same millisecond
       elementTimestamp = new DateTime.now().millisecondsSinceEpoch;
       var deactivateFuture = _escapeHandler.addWidget(elementTimestamp);
+      print(deactivateFuture);
       deactivateFuture.then((_) {
         _updateState(State.INACTIVE);
       });
       dispatchEvent(new CustomEvent("show"));
     } else {
       popoverWrapper.style.display = 'none';
-      print('hidden again');
       _escapeHandler.removeWidget(elementTimestamp);
       // the element is deactive and we give it 0 as timestamp to make sure
       // you can't find it by getting the max of all elements with the data attribute

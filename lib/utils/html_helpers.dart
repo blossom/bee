@@ -3,7 +3,6 @@ library htmlHelpers;
 import 'dart:html';
 
 bool insideNodeWhere(Element element, bool f(Element element)) {
-  print(element.className);
   if (element.parent != null) {
     if (f(element.parent)) {
       return true;
