@@ -7,7 +7,7 @@ import '../../utils/html_helpers.dart';
 
 class State {
   static const ACTIVE = const State._(0);
-  static const DEACTIVE = const State._(1);
+  static const INACTIVE = const State._(1);
 
   final int value;
   const State._(this.value);
@@ -28,12 +28,12 @@ class BeePopover extends PolymerElement {
   @published String arrowBottom;
   static const EventStreamProvider<CustomEvent> showEvent = const EventStreamProvider<CustomEvent>('show');
   static const EventStreamProvider<CustomEvent> hideEvent = const EventStreamProvider<CustomEvent>('hide');
-  int elementTimestamp = 0;
+  @observable int elementTimestamp = 0;
   StreamSubscription _documentClick;
   StreamSubscription _documentTouch;
   StreamSubscription _toggleClick;
   StreamSubscription _toggleTouch;
-  State _state = State.DEACTIVE;
+  State _state = State.INACTIVE;
   EscapeHandler _escapeHandler = new EscapeHandler();
 
   BeePopover.created() : super.created() {}
@@ -73,17 +73,15 @@ class BeePopover extends PolymerElement {
   }
 
   void toggle(event) {
-    print('toggle');
     if (event != null) {event.preventDefault(); }
     if (_state == State.ACTIVE) {
-      _updateState(State.DEACTIVE);
+      _updateState(State.INACTIVE);
     } else {
       _updateState(State.ACTIVE);
     }
   }
 
   void _updateState(var newState) {
-    print(newState == State.ACTIVE);
     Element popoverWrapper = shadowRoot.querySelector('.q-b-popover-wrapper');
     _state = newState;
     if (_state == State.ACTIVE) {
@@ -95,7 +93,7 @@ class BeePopover extends PolymerElement {
       elementTimestamp = new DateTime.now().millisecondsSinceEpoch;
       var deactivateFuture = _escapeHandler.addWidget(elementTimestamp);
       deactivateFuture.then((_) {
-        _updateState(State.DEACTIVE);
+        _updateState(State.INACTIVE);
       });
       dispatchEvent(new CustomEvent("show"));
     } else {
@@ -108,15 +106,18 @@ class BeePopover extends PolymerElement {
     }
   }
 
+  /**
+   * Close the popover-body in case the user clicked outside of it.
+   *
+   * The only exception is when the user clicked on the toggle area (this case is handled by toggle)
+   * We can close this popover if the user clicked outside of this component
+   * if the user clicked inside of the component we are closing it through the togglehandler.
+   */
   void _hideClickHandler(Event event) {
-    Element popoverWrapper = shadowRoot.querySelector('.q-b-popover-wrapper');
-    // close the overlay in case the user clicked outside of the overlay content area
-    // only exception is when the user clicked on the toggle area (this case is handled by toggle)
-    bool clickOutsidePopover = !insideOrIsNodeWhere(event.target, (element) => element.hashCode == popoverWrapper.hashCode);
-    Element launchArea = shadowRoot.querySelector('.q-launch-area');
-    bool clickOnToggleArea = insideOrIsNodeWhere(event.target, (element) => element.hashCode == launchArea.hashCode);
-    if (clickOutsidePopover && !clickOnToggleArea) {
-      _updateState(State.DEACTIVE);
+    bool clickOutsideComponent = !insideOrIsNodeWhere(event.target, (element) => element.hashCode == shadowRoot.host.hashCode);
+
+    if (clickOutsideComponent) {
+      _updateState(State.INACTIVE);
     }
   }
 

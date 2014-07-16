@@ -8,13 +8,30 @@
     <script src="packages/web_components/platform.js"></script>
     <script src="packages/web_components/dart_support.js"></script>
     <link rel="import" href="../../lib/components/popover/popover.html" />
+    <style>
+      .x-popover-body-info-one {
+        padding: 20px;
+      }
+
+      .x-popover-body-info-two {
+        padding: 20px;
+      }
+    </style>
   </head>
 
   <body>
     <h1>b-popover example</h1>
     <b-popover>
       <div class="select-launch-area">Click me</div>
-      <div class="select-body">Content</div>
+      <div class="select-body x-popover-body-info-one">Content</div>
+    </b-popover>
+
+    <br><br><br><br>
+
+
+    <b-popover>
+      <div class="select-launch-area">Click me 2</div>
+      <div class="select-body x-popover-body-info-two">Content 2</div>
     </b-popover>
     <script type="application/dart">export 'package:polymer/init.dart';</script>
     <script src="packages/browser/dart.js"></script>
