@@ -26,7 +26,7 @@ class BeeTextarea extends PolymerElement {
   final _htmlEscape = new HtmlEscape();
 
   BeeTextarea.created() : super.created() {}
-  
+
   void focus() {
     if (_textarea != null) {
       _textarea.focus();
@@ -87,16 +87,18 @@ class BeeTextarea extends PolymerElement {
   }
 
   /**
-   * Resizing the textarea after every change of the value or in case the textarea has been resized.
-   * Only works in case the window has been resized.
+   * Resizing the textarea after every change of the value or in case the
+   * textarea has been resized. Only works in case the window has been resized.
    *
-   * The content of the shadow div used to calculate the size gets sanitzied since the provided
-   * value could also include content from someone else then the currently editing user.
+   * The content of the shadow div used to calculate the size gets sanitzied
+   * since the provided value could also include content from someone else then
+   * the currently editing user.
    *
    * Note:
-   * If you fill a text area only with spaces end you reach the right side it won't break the line.
-   * This can lead to unexpected behaviour for the autogrowing. Didn't find any solution
-   * and Facebook has the same issue.
+   * If you fill a textarea only with spaces and the cursor reaches the right
+   * side it won't break the line. This can lead to unexpected behaviour for the
+   * autogrowing. Didn't find any solution and I (Nik) noticed Facebook has the
+   * same issue with the status update form.
    */
   void resize() {
     window.console.log('resize');

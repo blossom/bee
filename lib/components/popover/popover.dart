@@ -92,7 +92,6 @@ class BeePopover extends PolymerElement {
       // this implmentation assumes that multiple elements can't be activated at the exact same millisecond
       elementTimestamp = new DateTime.now().millisecondsSinceEpoch;
       var deactivateFuture = _escapeHandler.addWidget(elementTimestamp);
-      print(deactivateFuture);
       deactivateFuture.then((_) {
         _updateState(State.INACTIVE);
       });
