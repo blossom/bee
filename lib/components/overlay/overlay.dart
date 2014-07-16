@@ -36,7 +36,7 @@ class BeeOverlay extends PolymerElement {
 
   @published String width = "600px";
   DivElement _backdrop;
-  @published String elementTimestamp = "0";
+  @published int elementTimestamp = 0;
   State _state = State.DEACTIVE;
   EscapeHandler _escapeHandler = new EscapeHandler();
 
@@ -130,8 +130,8 @@ class BeeOverlay extends PolymerElement {
     // * identify the overlay in the dom
     // * find out which layer/element to close on esc
     // this implmentation assumes that multiple elements can't be activated at the exact same millisecond
-    elementTimestamp = new DateTime.now().millisecondsSinceEpoch.toString();
-    var hideFuture = _escapeHandler.addWidget(int.parse(elementTimestamp));
+    elementTimestamp = new DateTime.now().millisecondsSinceEpoch;
+    var hideFuture = _escapeHandler.addWidget(elementTimestamp);
     hideFuture.then((_) {
       _updateState(State.DEACTIVE);
     });
@@ -141,10 +141,10 @@ class BeeOverlay extends PolymerElement {
 
   void _hide() {
     _backdrop.style.display = 'none';
-    _escapeHandler.removeWidget(int.parse(elementTimestamp));
+    _escapeHandler.removeWidget(elementTimestamp);
     // the element is deactive and we give it 0 as timestamp to make sure
     // you can't find it by getting the max of all elements with the data attribute
-    elementTimestamp = "0";
+    elementTimestamp = 0;
   
     List<Element> backdrops = querySelectorAll('.q-b-overlay-backdrop');
     // TODO check for visible getter in the future, see https://code.google.com/p/dart/issues/detail?id=6526
