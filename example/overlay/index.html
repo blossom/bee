@@ -4,18 +4,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>b-popover example</title>
+    <title>b-button example</title>
     <script src="packages/web_components/platform.js"></script>
     <script src="packages/web_components/dart_support.js"></script>
     <link rel="import" href="../../lib/components/button/button.html" />
     <link rel="import" href="../../lib/components/overlay/overlay.html" />
   </head>
 
-  <body>
+  <body unresolved>
     <h1>b-overlay example</h1>
-    <div is="b-button" type="button" on-click="querySelector('.q-example-overlay').xtag.show()" on-touch-start="querySelector('.q-example-overlay').xtag.show()">Launch Overlay</div>
 
-    <script type="application/dart">export 'package:polymer/init.dart';</script>
+    <div is="b-button" type="button" id="launch">Launch Overlay</div>
+
+    <b-overlay width="600px" class="q-example-overlay">
+      <h2>Bee</h2>
+      <p>
+        Bee is a collection of lightweight interaction elements for modern web applications. It is built on top of Dart's Web UI package. It contains frequently used components like Buttons, Popovers, Overlays, Input Fields and more.
+      </p>
+    </b-overlay>
+
+    <script type="application/dart" src="index.dart"></script>
     <script src="packages/browser/dart.js"></script>
   </body>
 </html>
