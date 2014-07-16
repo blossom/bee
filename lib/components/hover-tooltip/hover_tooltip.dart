@@ -22,10 +22,22 @@ class BeeHoverTooltip extends PolymerElement {
   }
 
   void showTooltip(MouseEvent event) {
-    _tooltip.style.display = 'block';
+    _tooltip.classes.add('b-hover-tooltip-show');
+    new Timer(const Duration(milliseconds: 10), _toggleAnimation);
+  }
+  
+  void _toggleAnimation() {
+    _tooltip.classes.toggle('b-hover-tooltip-animate');
   }
 
   void hideTooltip(MouseEvent event) {
-    _tooltip.style.display = 'none';
+    _toggleAnimation();
+    new Timer(const Duration(milliseconds: 200), () {
+      if (_tooltip.classes.contains('b-hover-tooltip-animate')) {
+        // abort if there's an animation in progress after 200ms timeout
+        return;
+      }
+      _tooltip.classes.remove('b-hover-tooltip-show');
+    });  
   }
 }
