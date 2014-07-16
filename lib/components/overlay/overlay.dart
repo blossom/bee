@@ -100,8 +100,9 @@ class BeeOverlay extends PolymerElement {
    * Close the overlay in case the user clicked outside of the overlay
    * content area.
    */
-  void _removeClickHandler(event) {
+  void _handleHideClick(event) {
     Element backdrop;
+
     if (event.target.classes.contains('q-b-overlay-backdrop')) {
       backdrop = event.target;
     } else if (event.target.classes.contains('q-b-overlay-backdrop-close')) {
@@ -134,10 +135,10 @@ class BeeOverlay extends PolymerElement {
       _updateState(State.DEACTIVE);
     });
     querySelector("html").classes.add('overlay-backdrop-active');
-    _clickSubscription = document.onClick.listen(null);
-    _clickSubscription.onData(_removeClickHandler);
-    _touchSubscription = document.onTouchStart.listen(null);
-    _touchSubscription.onData(_removeClickHandler);
+    _clickSubscription = _backdrop.onClick.listen(null);
+    _clickSubscription.onData(_handleHideClick);
+    _touchSubscription = _backdrop.onTouchStart.listen(null);
+    _touchSubscription.onData(_handleHideClick);
     dispatchEvent(new CustomEvent("show"));
   }
 
