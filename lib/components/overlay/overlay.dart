@@ -41,11 +41,8 @@ class BeeOverlay extends PolymerElement {
 
   BeeOverlay.created() : super.created() {}
 
-  //  void created() {
-  //    _add_scrollbar_info();
-  //  }
-
   void attached() {
+    _add_scrollbar_info();
     _backdrop = shadowRoot.querySelector('.q-b-overlay-backdrop');
     _updateState(_state);
     shadowRoot.querySelector('.q-overlay').style.width = width;
