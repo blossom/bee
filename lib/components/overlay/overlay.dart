@@ -29,6 +29,9 @@ class BeeOverlay extends PolymerElement {
   static const EventStreamProvider<CustomEvent> showEvent = const EventStreamProvider<CustomEvent>('show');
   static const EventStreamProvider<CustomEvent> hideEvent = const EventStreamProvider<CustomEvent>('hide');
   StreamSubscription _clickSubscription;
+  // Listen to touch start for improved UX. Some Browsers like iOS Safari have a
+  // delay until the click event is fired which is not desired for elements like
+  // links or buttons.
   StreamSubscription _touchSubscription;
   @published String width = "600px";
   DivElement _backdrop;
