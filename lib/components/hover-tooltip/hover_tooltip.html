@@ -1,0 +1,19 @@
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+<link rel="import" href="../tooltip/tooltip.html" />
+
+
+<polymer-element name="b-hover-tooltip">
+  <template>
+    <link rel="stylesheet" href="hover_tooltip.css" />
+
+    <div class="q-hover-tooltip-hover-area-wrapper">
+      <content select=".select-hover-area"></content>
+    </div>
+    <div class="b-hover-tooltip-tooltip-wrapper">      
+      <b-tooltip>
+        <content select=".select-tooltip-content"></content>
+      </b-tooltip>
+    </div>
+  </template>
+  <script type="application/dart" src="hover_tooltip.dart"></script>
+</polymer-element>

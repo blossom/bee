@@ -16,3 +16,6 @@ transformers:
      - example/button/index.html
      - example/loading/index.html
      - example/popover/index.html
+     - example/tooltip/index.html
+     - example/hover-tooltip/index.html
+     - example/textarea/index.html
