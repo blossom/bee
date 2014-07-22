@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+  <element name="b-autocomplete" constructor="AutocompleteComponent" extends="div">
+    <template>
+      <style>
+        .b-autocomplete-data-source-wrapper {
+          display: none;
+        }
+        .b-autocomplete-prefix-area-wrapper {
+          float: left;
+          display: block;
+        }
+        .b-autocomplete-main-area {
+          display: block;
+          float: left;
+          position: relative;
+        }
+        .b-autocomplete-active {
+          background: #ccc;
+          cursor: pointer;
+        }
+        .b-autocomplete-results {
+          display: block;
+          overflow-y: scroll;
+          background: #fff;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 24px;
+          z-index: 10000;
+          border: 1px solid #b2b2b2;
+          margin-top: 0px !important;
+          border-radius: 3px;
+          border-top-right-radius: 0;
+          border-top-left-radius: 0;
+          -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.148438);
+          -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.148438);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.148438);
+        }
+        .b-autocomplete-results-li {
+          background-color: #fff;
+          margin: 0;
+          width: auto;
+          border-bottom: 1px solid #eee;
+          overflow: hidden;
+          cursor: pointer;
+          list-style: none;
+          white-space: nowrap;
+        }
+        .b-autocomplete-results-li:last-child {
+          border-bottom: none;
+        }
+        .b-autocomplete-results-li.b-autocomplete-active {
+          background-color: #f2f2f2;
+        }
+        .no-touch .b-autocomplete-results-li:hover {
+          background-color: #f2f2f2;
+        }
+        .b-autocomplete-activation-area {
+          display: block;
+          overflow: hidden;
+          margin-bottom: 2px;
+        }
+        .b-autocomplete-form {
+          float: left !important;
+          display: none;
+        }
+        .b-autocomplete-form-input {
+          /* need to overwrite width from bootstrap input width */
+          width: 100% !important;
+          height: 20px;
+          font-size: 14px;
+          line-height: normal !important;
+          color: #666;
+          margin: 0 !important;
+          margin-top: 2px !important;
+          padding: 0 !important;
+          -webkit-border-radius: 0px !important;
+          mox-border-radius: 0px !important;
+          border-radius: 0px !important;
+          border-top: none !important;
+          border-right: none !important;
+          border-left: none !important;
+          border-bottom: 1px dotted #333 !important;
+          background: transparent;
+          box-shadow: none;
+          letter-spacing: 0;
+          resize: none;
+          word-wrap: break-word;
+        }
+        .b-autocomplete-activation-area-add-text {
+          display: block;
+          float: left;
+          color: #505050;
+          margin-top: 3px;
+        }
+      </style>
+      <!-- hidden but needed to initialize the widget -->
+      <div class="b-autocomplete-data-source-wrapper">
+        <content select=".data-source"></content>
+      </div>
+
+      <a href="#" on-mouse-down="activate($event)"
+         on-touch-start="activate($event)" class="b-autocomplete-prefix-area-wrapper">
+        <content select=".prefix-area"></content>
+      </a>
+
+      <div class="b-autocomplete-main-area q-autocomplete-main-area">
+        <a href="#" class="b-autocomplete-activation-area q-autocomplete-activation-area" on-click="activate($event)"
+           on-touch-start="activate($event)">
+          <span class="b-autocomplete-activation-area-add-text"
+                style="font-size: {{ fontSize }}">
+            {{ addText }}
+          </span>
+        </a>
+        
+        <template instantiate if="_state == State.ACTIVE">
+          <form id="b-autocomplete-form" on-submit="_select($event)">
+            <input type="text"
+                   bind-value="_filterQuery"
+                   on-input="_updateFilteredEntries()"
+                   on-focus="_focused()"
+                   on-blur="_blurred()"
+                   class="q-autocomplete-form-input b-autocomplete-form-input"
+                   placeholder="{{placeholder}}"
+                   style="font-size: {{ fontSize }}">
+          </form>
+          {{ focusOnInput() }}
+        </template>
+  
+        <template instantiate if="_filteredEntries.isNotEmpty">
+          <ul class="b-autocomplete-results" style="max-height: {{ maxHeight }}">
+            <template iterate="entry in _filteredEntries">
+              <template instantiate if="entry == _activeEntry">
+                <!-- mouse-down is used instead of click to make sure it is
+                captured before the blur event is fire -->
+                <li class="b-autocomplete-results-li b-autocomplete-active"
+                    on-mouse-down="_select($event)"
+                    on-touch-start="_select($event)">{{ entry.sanitizedHtml }}</li>
+              </template>
+              <template instantiate if="entry != _activeEntry">
+                <li class="b-autocomplete-results-li"
+                    on-mouse-over="_setToActiveEntry(entry)"
+                    on-click="_select($event)"
+                    on-mouse-down="_select($event)">{{ entry.sanitizedHtml }}</li>
+              </template>
+            </template>
+          </ul>
+        </template>
+      </div>
+
+    </template>
+    <script type="application/dart" src="autocomplete.dart"></script>
+  </element>
+</body></html>

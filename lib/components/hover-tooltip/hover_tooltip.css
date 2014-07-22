@@ -1,0 +1,23 @@
+.b-hover-tooltip-tooltip-wrapper {
+  position: absolute;
+  left: 50%;
+  /*opacity: 0;*/
+  display: none;
+}
+.b-hover-tooltip-tooltip {
+  margin: 0 auto;
+  /* 
+    bee/bootstrap tooltip z-index
+  */
+  z-index: 1030;
+  position: relative;
+  left: -50%;
+}
+.q-hover-tooltip-hover-area-wrapper {
+  position: relative;
+  /*
+    same as overlay backdrop but lower than popover to hide
+    it under the due date popover
+  */
+  z-index: 998;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="import" href="tooltip.html">
+  </head>
+  <body>
+    <element name="b-hover-tooltip" constructor="HoverTooltipComponent" extends="div">
+      <template>
+        <style>
+        .b-hover-tooltip-tooltip-wrapper {
+          position: absolute;
+          left: 50%;
+        }
+        .b-hover-tooltip-tooltip {
+          opacity: 0;
+          display: none;
+          margin: 0 auto;
+          /* 
+            bee/bootstrap tooltip z-index
+          */
+          z-index: 1030;
+          position: relative;
+          left: -50%;
+        }
+        .q-hover-tooltip-hover-area-wrapper {
+          position: relative;
+          /*
+            same as overlay backdrop but lower than popover to hide
+            it under the due date popover
+          */
+          z-index: 998;
+        }
+        </style>
+        <div on-mouse-over="showTooltip($event)"
+             on-mouse-out="hideTooltip($event)"
+             class="q-hover-tooltip-hover-area-wrapper">
+          <content select=".select-hover-area"></content>
+        </div>
+        <div class="b-hover-tooltip-tooltip-wrapper">
+          <b-tooltip class="b-hover-tooltip-tooltip q-hover-tooltip-tooltip">
+            <content select=".select-tooltip-content"></content>
+          </b-tooltip>
+        </div>
+      </template>
+      <script type="application/dart" src="hover_tooltip.dart"></script>
+    </element>
+  </body>
+</html>

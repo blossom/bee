@@ -408,14 +408,3 @@ polyfill-unscoped-rule {
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   font-size: 16px;
 }
-
-polyfill-unscoped-rule {
-  content: '.btn-primary';
-  background: red;
-}
-
-polyfill-unscoped-rule {
-  content: '[is="b-button"]';
-  border: none;
-  background:none;
-}

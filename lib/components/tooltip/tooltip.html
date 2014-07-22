@@ -1,0 +1,15 @@
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+
+<polymer-element name="b-tooltip">
+  <template>
+    <link rel="stylesheet" href="tooltip.css" />
+
+    <div class="b-tooltip-wrapper q-tooltip b-tooltip-bottom b-tooltip-in">
+      <div class="b-tooltip-arrow"></div>
+      <div class="b-tooltip-inner q-tooltip-inner">
+        <content></content>
+      </div>
+    </div>
+  </template>
+  <script type="application/dart" src="tooltip.dart"></script>
+</polymer-element>

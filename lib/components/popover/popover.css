@@ -1,0 +1,50 @@
+:host {
+  border: none;
+  background:none;
+}
+
+.b-popover-dialog {
+  position: absolute;
+  top: 8px;
+  z-index: 999;
+  border: 1px solid #cccccc;
+  -moz-box-shadow: -1px 1px 1px rgba(0,0,0,.2);
+  -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.2);
+  box-shadow: 0 2px 4px rgba(0,0,0,.2);
+  background: #ffffff;
+}
+
+.b-popover-arrow,
+.b-popover-arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.b-popover-arrow {
+  border-width: 8px;
+  border-top-width: 0;
+  border-bottom-color: #999999;
+  border-bottom-color: rgba(0, 0, 0, 0.25);
+  top: -8px;
+}
+.b-popover-arrow:after {
+  border-width: 7px;
+  content: " ";
+  top: 1px;
+  margin-left: -7px;
+  border-top-width: 0;
+  border-bottom-color: #ffffff;
+}
+
+.b-popover-body {
+    padding: 0;
+}
+.x-popover-launch-area {
+    display: inline;
+}
+.x-popover-launch-area:hover {
+    cursor: pointer;
+}

@@ -1,10 +1,12 @@
-import 'package:web_ui/web_ui.dart';
+import 'package:polymer/polymer.dart';
+
 import 'dart:html';
 import 'dart:math';
 import 'dart:async';
 import 'dart:convert';
 
-class TextareaComponent extends WebComponent {
+@CustomTag('b-textarea')
+class BeeTextarea extends PolymerElement {
   static const EventStreamProvider<CustomEvent> blurEvent = const EventStreamProvider<CustomEvent>('blur');
   static const EventStreamProvider<CustomEvent> focusEvent = const EventStreamProvider<CustomEvent>('focus');
   @observable String value;
@@ -23,15 +25,20 @@ class TextareaComponent extends WebComponent {
   var _shadow;
   final _htmlEscape = new HtmlEscape();
 
+  BeeTextarea.created() : super.created() {}
+
   void focus() {
     if (_textarea != null) {
       _textarea.focus();
     }
   }
 
-  void inserted() {
-    _textarea = getShadowRoot('b-textarea').query('.q-textarea-textarea');
-    _shadow = getShadowRoot('b-textarea').query('.q-textarea-shadow');
+  void attached() {
+    window.console.log('attached');
+
+    _textarea = shadowRoot.querySelector('.q-textarea-textarea');
+    _shadow = shadowRoot.querySelector('.q-textarea-shadow');
+    window.console.log(_shadow);
 
     _textarea.style.paddingTop = '${paddingTop}px';
     _textarea.style.paddingRight = '${paddingRight}px';
@@ -70,30 +77,38 @@ class TextareaComponent extends WebComponent {
     resize();
   }
 
-  /*
+  /**
    * Allow to set the selection range of the text carret.
    */
+  @published
   setSelectionRange(int start, int end) {
-    _textarea = getShadowRoot('b-textarea').query('.q-textarea-textarea');
+    _textarea = shadowRoot.querySelector('.q-textarea-textarea');
     _textarea.setSelectionRange(start, end);
   }
 
-  /*
-   * Resizing the textarea after every change of the value or in case the textarea has been resized.
-   * Only works in case the window has been resized.
+  /**
+   * Resizing the textarea after every change of the value or in case the
+   * textarea has been resized. Only works in case the window has been resized.
    *
-   * The content of the shadow div used to calculate the size gets sanitzied since the provided
-   * value could also include content from someone else then the currently editing user.
+   * The content of the shadow div used to calculate the size gets sanitzied
+   * since the provided value could also include content from someone else then
+   * the currently editing user.
    *
    * Note:
-   * If you fill a text area only with spaces end you reach the right side it won't break the line.
-   * This can lead to unexpected behaviour for the autogrowing. Didn't find any solution
-   * and Facebook has the same issue.
+   * If you fill a textarea only with spaces and the cursor reaches the right
+   * side it won't break the line. This can lead to unexpected behaviour for the
+   * autogrowing. Didn't find any solution and I (Nik) noticed Facebook has the
+   * same issue with the status update form.
    */
   void resize() {
+    window.console.log('resize');
+    window.console.log(value);
+    window.console.log(_textarea.value);
+
     _shadow.style.width = _textarea.getComputedStyle().width;
     var validator = new NodeValidatorBuilder()..allowElement('br');
-    _shadow.setInnerHtml(_sanitizeInput(value), validator: validator);
+    _shadow.setInnerHtml(_sanitizeInput(_textarea.value), validator: validator);
+    window.console.log(_shadow);
     var _shadowHeight = _shadow.getComputedStyle().height;
 
     // Wait with the resize until the widget is rendered in the DOM. A textarea
@@ -114,6 +129,7 @@ class TextareaComponent extends WebComponent {
     } else {
       newHeight = _shadowHeight;
     }
+    window.console.log(newHeight);
     _textarea.style.height = newHeight;
   }
 
@@ -123,17 +139,17 @@ class TextareaComponent extends WebComponent {
 
   Stream<CustomEvent> get onBlur => blurEvent.forTarget(this);
 
-  _blur(Event event) {
+  handleBlur(Event event) {
     dispatchEvent(new CustomEvent("blur"));
   }
 
   Stream<CustomEvent> get onFocus => focusEvent.forTarget(this);
 
-  _focus(Event event) {
+  handleFocus(Event event) {
     dispatchEvent(new CustomEvent("focus"));
   }
 
-  /*
+  /**
    * Sanitizes the input.
    *
    * The input gets escaped based on
@@ -142,6 +158,8 @@ class TextareaComponent extends WebComponent {
    * Further whitespaces and new lines are used to create a container with a proper height.
    */
   String _sanitizeInput(input) {
+    window.console.log('sanitize input');
+
     var computedHtml;
     if (input != null) {
       var escaptedHtml = _htmlEscape.convert(input);

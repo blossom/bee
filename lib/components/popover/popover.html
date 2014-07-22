@@ -1,0 +1,38 @@
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+<polymer-element name="b-popover">
+  <template>
+    <link rel="stylesheet" href="popover.css" />
+
+    <div class="x-popover-launch-area q-launch-area">
+      <content select=".select-launch-area"></content>
+    </div>
+    <!-- We use disblay block/none to toggle the visibility of the popover since
+         content tags inside templates don't work at the moment (Web UI 0.4.5)
+         see https://github.com/dart-lang/web-ui/issues/228
+
+         In the future we want to use:
+         <template instantiate if="state == State.ACTIVE">
+            ...
+            <content select=".body"></content>
+            ...
+         </template>
+    -->
+    <div class="b-popover-wrapper q-b-popover-wrapper" data-element-timestamp="{{elementTimestamp}}">
+      <div class="b-popover-dialog">
+        <div class="b-popover-header">
+          <div class="b-popover-arrow q-b-popover-arrow">
+            <span class="b-popover-arrow-up-outline"></span>
+            <span class="b-popover-arrow-up-body"></span>
+          </div>
+        </div>
+        <div class="b-popover-body">
+          <content select=".select-body"></content>
+        </div>
+        <div class="b-popover-footer"></div>
+      </div>
+    </div>
+
+
+  </template>
+  <script type="application/dart" src="popover.dart"></script>
+</polymer-element>
