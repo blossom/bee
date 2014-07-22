@@ -2,7 +2,11 @@
   position: absolute;
   left: 50%;
   /*opacity: 0;*/
-  display: none;
+  -webkit-transition:.2s ease all;
+  -moz-transition:.2s ease all;
+  transition:.2s ease all;
+  opacity:0;
+  display:none;
 }
 .b-hover-tooltip-tooltip {
   margin: 0 auto;
@@ -12,6 +16,12 @@
   z-index: 1030;
   position: relative;
   left: -50%;
+}
+.b-hover-tooltip-show {
+  display:block;
+}
+.b-hover-tooltip-animate {
+  opacity:1;
 }
 .q-hover-tooltip-hover-area-wrapper {
   position: relative;

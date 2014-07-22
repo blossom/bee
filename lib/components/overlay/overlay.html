@@ -1,0 +1,17 @@
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+<polymer-element name="b-overlay">
+  <template>
+    <link rel="stylesheet" href="overlay.css" />
+
+    <div class="b-overlay-backdrop q-b-overlay-backdrop"
+         on-click="{{handleHideAction}}"
+         on-touch-start="{{handleHideAction}}">
+      <div class="b-overlay-backdrop-close q-b-overlay-backdrop-close" title="Press ESC to close">×</div>
+      <div class="b-overlay-body q-overlay">
+        <content></content>
+      </div>
+    </div>
+
+  </template>
+  <script type="application/dart" src="overlay.dart"></script>
+</polymer-element>

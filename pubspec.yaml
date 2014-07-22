@@ -18,5 +18,6 @@ transformers:
      - example/loading/index.html
      - example/popover/index.html
      - example/tooltip/index.html
+     - example/overlay/index.html
      - example/hover-tooltip/index.html
      - example/textarea/index.html

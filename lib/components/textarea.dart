@@ -86,9 +86,10 @@ class TextareaComponent extends WebComponent {
    * value could also include content from someone else then the currently editing user.
    *
    * Note:
-   * If you fill a text area only with spaces end you reach the right side it won't break the line.
-   * This can lead to unexpected behaviour for the autogrowing. Didn't find any solution
-   * and Facebook has the same issue.
+   * If you fill a text area only with spaces and the cursor reaches the right
+   * side it won't break the line. This can lead to unexpected behaviour for the
+   * autogrowing. Didn't find any solution and I noticed Facebook has the same
+   * issue with the status update form.
    */
   void resize() {
     _shadow.style.width = _textarea.getComputedStyle().width;
