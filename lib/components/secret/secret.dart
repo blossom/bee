@@ -22,21 +22,31 @@ class BeeSecret extends PolymerElement {
   }
 
   void attached() {
-
     _passwordWrapper = shadowRoot.querySelector('.q-b-secret-password-wrapper');
     _textWrapper =  shadowRoot.querySelector('.q-b-secret-text-wrapper');
     _updateState();
   }
 
+  /**
+   * Sets focus on the b-secret element.
+   */
   void focus() {
     _activeInput.focus();
   }
 
+  /**
+   * Updates the b-secret input to display the value like a password field.
+   */
   void hideSecret() {
     _passwordActive = true;
     _updateState();
   }
 
+  /**
+   * Toggle between the plain text and obfuscate version of the input.
+   *
+   * The focus and selection/caret positions stay the same.
+   */
   void toggleShowSecret (event) {
     event.preventDefault();
     // retrieve the current selection before the field is toggled
@@ -47,6 +57,7 @@ class BeeSecret extends PolymerElement {
     _activeInput.focus();
     _updateSelection();
   }
+
   void _updateState() {
     if (_passwordActive) {
       _passwordWrapper.style.display = 'block';
@@ -63,13 +74,15 @@ class BeeSecret extends PolymerElement {
 
   void handleBlur(event) {
     // TODO find a better way
-    // figure out if the user toggled the password or blurred the password field
-    // by checking which element is focused
+    // Figure out if the user toggled the password or blurred the password field
+    // by checking which element is focused.
 
-    // in Chrome Version 26.0.1410.65 the focus event gets fired around 12x milli seconds after the blur event
-    // in Firefox the focus event is fired before the blur event
-    // in IE9 the focus event is fired around 9x milliseconds after the blur event
-    // picked 200 milliseconds for our timer to be on the safe side
+    // In Chrome Version 26.0.1410.65 the focus event gets fired around
+    // 12x milli seconds after the blur event.
+    // In Firefox the focus event is fired before the blur event.
+    // In IE9 the focus event is fired around 9x milliseconds after the blur
+    // event.
+    // We chose 200 milliseconds for our timer to be on the safe side.
     new Timer(new Duration(milliseconds:200), () {
       if (document.activeElement.hashCode != shadowRoot.host.hashCode) {
         dispatchEvent(new CustomEvent("blur"));
@@ -102,6 +115,10 @@ class BeeSecret extends PolymerElement {
     }
   }
 
+  /*
+   * Updates the focusClass which is used in the template to indicate if
+   * b-secret currently has the focus.
+   */
   void hasFocusChanged(newValue) {
     if (newValue) {
       focusClass = '';
