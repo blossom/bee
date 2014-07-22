@@ -4,7 +4,8 @@
     <link rel="stylesheet" href="overlay.css" />
 
     <div class="b-overlay-backdrop q-b-overlay-backdrop"
-         on-click="{{handleHideClick}}">
+         on-click="{{handleHideAction}}"
+         on-touch-start="{{handleHideAction}}">
       <div class="b-overlay-backdrop-close q-b-overlay-backdrop-close" title="Press ESC to close">×</div>
       <div class="b-overlay-body q-overlay">
         <content></content>
