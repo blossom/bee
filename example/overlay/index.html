@@ -14,9 +14,48 @@
   <body unresolved>
     <h1>b-overlay example</h1>
 
-    <div is="b-button" type="button" id="launch">Launch Overlay</div>
+    <div is="b-button" type="button" id="launch-example1">Launch Basic Overlay</div>
+    <div is="b-button" type="button" id="launch-example2">Launch Overlay with a lot of Content</div>
+    <div is="b-button" type="button" id="launch-example3">Launch Overlay with event listeners bind to Show/Hide</div>
 
-    <b-overlay width="600px" class="q-example-overlay">
+    <b-overlay width="600px" class="q-example1-overlay">
+      <h2>Bee</h2>
+      <p>
+        Bee is a collection of lightweight interaction elements for modern web applications. It is built on top of Dart's Web UI package. It contains frequently used components like Buttons, Popovers, Overlays, Input Fields and more.
+      </p>
+    </b-overlay>
+
+    <b-overlay width="400px" class="q-example2-overlay">
+      <p><i>Hint: See how smooth you can scroll down, while everything behind the backdrop doesn't scroll.</i></p>
+
+      <h2>Rubber duck debugging</h2>
+      <p>
+      Rubber duck debugging, rubber ducking,[1] and the rubber duckie test[2] are informal terms used in software engineering to refer to a method of debugging code. The name is a reference to a story in the book The Pragmatic Programmer in which a programmer would carry around a rubber duck and debug his code by forcing himself to explain it, line-by-line, to the duck.[3]
+      </p>
+
+      <p>
+      Many programmers have had the experience of explaining a programming problem to someone else, possibly even to someone who knows nothing about programming, and then hitting upon the solution in the process of explaining the problem. In describing what the code is supposed to do and observing what it actually does, any incongruity between these two becomes apparent.[4] By using an inanimate object, such as a rubber duck, the programmer can try to accomplish this without having to involve another person.
+      </p>
+
+      <p>
+      This concept is also known as "Talk to the Bear", dating from Kernighan's 1999 book The Practice of Programming.[5]
+      </p>
+
+      <h2>Single Source of Truth</h2>
+      <p>
+      In Information Systems design and theory Single Source Of Truth (SSOT) refers to the practice of structuring information models and associated schemata such that every data element is stored exactly once (e.g., in no more than a single row of a single table). Any possible linkages to this data element (possibly in other areas of the relational schema or even in distant federated databases) are by reference only. Thus, when any such data element is updated, this update propagates to the enterprise at large, without the possibility of a duplicate value somewhere in the distant enterprise not being updated (because there would be no duplicate values that needed updating).[citation needed]
+      </p>
+      <p>
+      Deployment of an SSOT architecture is becoming increasingly important in enterprise settings where incorrectly linked duplicate or de-normalized data elements (a direct consequence of intentional or unintentional denormalization of any explicit data model) poses a risk for retrieval of outdated, and therefore incorrect, information. A common example would be the electronic health record, where it is imperative to accurately validate patient identity against a single referential repository, which serves as the SSOT. Duplicate representations of data within the enterprise would be implemented by the use of pointers rather than duplicate database tables, rows, or cells. This ensures that data updates to elements in the authoritative location are comprehensively distributed to all federated database constituencies in the larger overall enterprise architecture.[citation needed]
+      </p>
+      <p>
+      SSOT systems provide data that is authentic, relevant, and referable.[1]
+      </p>
+
+      <p>Source: Wikipedia</p>
+    </b-overlay>
+
+    <b-overlay width="600px" class="q-example3-overlay">
       <h2>Bee</h2>
       <p>
         Bee is a collection of lightweight interaction elements for modern web applications. It is built on top of Dart's Web UI package. It contains frequently used components like Buttons, Popovers, Overlays, Input Fields and more.

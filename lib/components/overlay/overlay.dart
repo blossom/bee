@@ -4,13 +4,12 @@ import 'dart:html';
 import 'package:escape_handler/escape_handler.dart';
 
 /*
- *
- * tests:
+ * Possible things to tests:
  *
  * test esc behavior -> should close on esc of no younger element is active
  * test scrollbar callculation
  * test should hide itself,
- * test if provided closeCallback gets calles
+ * test if provided closeCallback gets called
  * test if component still work without provided closeCallback
  * test component still works but shows a warning if closeCallback is not callable
  *
@@ -25,19 +24,21 @@ class State {
 }
 
 
-// Listen to touch start for improved UX. Some Browsers like iOS Safari have a
-// delay until the click event is fired which is not desired for elements like
-// links or buttons.
-
+/**
+ * B-Overlay is scrollable modal spanning over the entire visisble html area.
+ */
+// Listen to touch start for improved UX by immedialty performing the close
+// action. Some Browsers like iOS Safari have a delay until the click event is
+// fired which is not desired for closing the overlay.
 @CustomTag('b-overlay')
 class BeeOverlay extends PolymerElement {
   static const EventStreamProvider<CustomEvent> showEvent = const EventStreamProvider<CustomEvent>('show');
   static const EventStreamProvider<CustomEvent> hideEvent = const EventStreamProvider<CustomEvent>('hide');
 
   @published String width = "600px";
-  DivElement _backdrop;
   @published int elementTimestamp = 0;
   State _state = State.DEACTIVE;
+  DivElement _backdrop;
   EscapeHandler _escapeHandler = new EscapeHandler();
 
   BeeOverlay.created() : super.created() {}
@@ -64,9 +65,13 @@ class BeeOverlay extends PolymerElement {
   Stream<CustomEvent> get onShow => showEvent.forTarget(this);
   Stream<CustomEvent> get onHide => hideEvent.forTarget(this);
 
-  /*
-   * Scollbar width detection. Adds either the class scrollbar0, scrollbar15 or scrollbar20
-   * to the body element.
+  /**
+   * Scollbar width detection.
+   *
+   * Adds either the class scrollbar0, scrollbar15 or
+   * scrollbar20 to the body element. At the time we investigated other
+   * solutions we figured out Facebook detects 3 different scrollbar widths and
+   * we decided to do the same.
    *
    * See http://jdsharp.us/jQuery/minute/calculate-scrollbar-width.php
    */
@@ -97,11 +102,11 @@ class BeeOverlay extends PolymerElement {
     }
   }
 
-  /*
+  /**
    * Close the overlay in case the user clicked outside of the overlay
    * content area.
    */
-  void handleHideClick(Event event, var detail, Node target) {
+  void handleHideAction(Event event, var detail, Node target) {
     Element backdrop;
 
     if (event.target.classes.contains('q-b-overlay-backdrop')) {
@@ -126,10 +131,12 @@ class BeeOverlay extends PolymerElement {
 
   void _show() {
     _backdrop.style.display = 'block';
-    // the attribute elementTimestamp represents the time the popover was activated which is important for 2 reasons
+    // The attribute elementTimestamp represents the time the popover was
+    // activated which is important for 2 reasons:
     // * identify the overlay in the dom
     // * find out which layer/element to close on esc
-    // this implmentation assumes that multiple elements can't be activated at the exact same millisecond
+    // This implmentation assumes that multiple elements can't be activated at
+    // the exact same millisecond.
     elementTimestamp = new DateTime.now().millisecondsSinceEpoch;
     var hideFuture = _escapeHandler.addWidget(elementTimestamp);
     hideFuture.then((_) {
@@ -142,15 +149,17 @@ class BeeOverlay extends PolymerElement {
   void _hide() {
     _backdrop.style.display = 'none';
     _escapeHandler.removeWidget(elementTimestamp);
-    // the element is deactive and we give it 0 as timestamp to make sure
-    // you can't find it by getting the max of all elements with the data attribute
+    // The element is deactive and we give it 0 as timestamp to make sure it
+    // can't be found by getting the max of all elements with the data attribute
     elementTimestamp = 0;
-  
+
     List<Element> backdrops = querySelectorAll('.q-b-overlay-backdrop');
-    // TODO check for visible getter in the future, see https://code.google.com/p/dart/issues/detail?id=6526
+    // TODO check for visible getter in the future
+    // see https://code.google.com/p/dart/issues/detail?id=6526
     Iterable<Element> visibleBackdrops = backdrops.where((Element backdrop) => backdrop.style.display != 'none');
     if (visibleBackdrops.length == 0) {
-      // to reenable scrolling we reset the body's style attribute (but only if we are hiding the last overlay)
+      // To re-enable scrolling we reset the body's style attribute.
+      // (but only if we are hiding the last overlay)
       querySelector("html").classes.remove('overlay-backdrop-active');
     }
     dispatchEvent(new CustomEvent("hide"));
