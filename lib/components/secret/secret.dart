@@ -8,20 +8,21 @@ class BeeSecret extends PolymerElement {
   @published String placeholder = 'Enter password here';
   @published String value;
   @published String name = 'secret';
-  @published bool required = false;  
-  
+  @published bool required = false;
+
+  @observable String focusClass = '';
+  @observable bool hasFocus = false;
   DivElement _passwordWrapper;
   DivElement _textWrapper;
   bool _passwordActive = true;
-  bool _hasFocus = false;
   int _selectionStart = 0;
   int _selectionEnd = 0;
-  
+
   BeeSecret.created() : super.created() {
   }
 
   void attached() {
-    
+
     _passwordWrapper = shadowRoot.querySelector('.q-b-secret-password-wrapper');
     _textWrapper =  shadowRoot.querySelector('.q-b-secret-text-wrapper');
     _updateState();
@@ -55,7 +56,7 @@ class BeeSecret extends PolymerElement {
       _textWrapper.style.display = 'block';
     }
   }
-    
+
   void handleInput() {
     dispatchEvent(new CustomEvent("input"));
   }
@@ -70,17 +71,15 @@ class BeeSecret extends PolymerElement {
     // in IE9 the focus event is fired around 9x milliseconds after the blur event
     // picked 200 milliseconds for our timer to be on the safe side
     new Timer(new Duration(milliseconds:200), () {
-      Element textField = shadowRoot.querySelector('.q-text-field');
-      Element passwordField = shadowRoot.querySelector('.q-password-field');
-      if (document.activeElement != textField && document.activeElement != passwordField) {
+      if (document.activeElement.hashCode != shadowRoot.host.hashCode) {
         dispatchEvent(new CustomEvent("blur"));
-        _hasFocus = false;
+        hasFocus = false;
       }
     });
   }
 
   void handleFocus(event) {
-    _hasFocus = true;
+    hasFocus = true;
   }
 
   String _retrieveSelection() {
@@ -94,7 +93,7 @@ class BeeSecret extends PolymerElement {
     _activeInput.selectionEnd = _selectionEnd;
     return '';
   }
-    
+
   InputElement get _activeInput {
     if (_passwordActive) {
       return shadowRoot.querySelector('.q-password-field');
@@ -102,11 +101,12 @@ class BeeSecret extends PolymerElement {
       return shadowRoot.querySelector('.q-text-field');
     }
   }
-  get focusClass {
-    if (_hasFocus) {
-      return 'secret-has-focus';
+
+  void hasFocusChanged(newValue) {
+    if (newValue) {
+      focusClass = '';
     } else {
-      return '';
+      focusClass = 'secret-has-focus';
     }
   }
 
