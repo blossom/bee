@@ -83,7 +83,7 @@ class BeeSecret extends PolymerElement {
     // In IE9 the focus event is fired around 9x milliseconds after the blur
     // event.
     // We chose 200 milliseconds for our timer to be on the safe side.
-    new Timer(new Duration(milliseconds:200), () {
+    new Future.delayed(new Duration(milliseconds:200), () {
       if (document.activeElement.hashCode != shadowRoot.host.hashCode) {
         dispatchEvent(new CustomEvent("blur"));
         hasFocus = false;
@@ -112,18 +112,6 @@ class BeeSecret extends PolymerElement {
       return shadowRoot.querySelector('.q-password-field');
     } else {
       return shadowRoot.querySelector('.q-text-field');
-    }
-  }
-
-  /*
-   * Updates the focusClass which is used in the template to indicate if
-   * b-secret currently has the focus.
-   */
-  void hasFocusChanged(newValue) {
-    if (newValue) {
-      focusClass = '';
-    } else {
-      focusClass = 'secret-has-focus';
     }
   }
 
