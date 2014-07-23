@@ -84,7 +84,24 @@ class BeeSecret extends PolymerElement {
     // event.
     // We chose 200 milliseconds for our timer to be on the safe side.
     new Future.delayed(new Duration(milliseconds:200), () {
-      if (document.activeElement.hashCode != shadowRoot.host.hashCode) {
+      var textField = shadowRoot.querySelector('.q-text-field');
+      var passwordField = shadowRoot.querySelector('.q-password-field');
+
+      window.console.log(document.activeElement.hashCode);
+
+      // at least one of them should be the same as activeElement
+      window.console.log(shadowRoot.host.hashCode);
+      window.console.log(textField.hashCode);
+      window.console.log(passwordField.hashCode);
+
+      window.console.log(document.activeElement);
+      window.console.log(textField);
+
+      // For Browsers with ShadowDOM support the shadowRoot.host matches while
+      // for Browsers without ShadowDOM support text or password field matches.
+      if (document.activeElement.hashCode != shadowRoot.host.hashCode &&
+          document.activeElement.hashCode != textField.hashCode &&
+          document.activeElement.hashCode != passwordField.hashCode) {
         dispatchEvent(new CustomEvent("blur"));
         hasFocus = false;
       }
