@@ -8,6 +8,7 @@ void main(List<String> args) {
                     'example/tooltip/index.html',
                     'example/overlay/index.html',
                     'example/hide-tooltip/index.html',
+                    'example/textarea/index.html',
                     'example/textarea/index.html'];
  lint(entryPoints: entryPoints, options: parseOptions(args));
 }
