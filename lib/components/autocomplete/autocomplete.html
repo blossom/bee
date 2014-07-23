@@ -1,0 +1,64 @@
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+<polymer-element name="b-autocomplete">
+  <template>
+    <link rel="stylesheet" href="autocomplete.css" />
+    
+    <div class="b-autocomplete-data-source-wrapper">
+        <content select=".data-source"></content>
+    </div>
+    
+    <a href="#" 
+      on-mouse-down="{{activate}}"
+      on-touch-start="{{activate}}" 
+      class="b-autocomplete-prefix-area-wrapper">
+        <content select=".prefix-area"></content>
+    </a>
+    
+    
+    <div class="b-autocomplete-main-area q-autocomplete-main-area">
+        <a href="#" class="b-autocomplete-activation-area q-autocomplete-activation-area" on-click="{{activate}}"
+           on-touch-start="{{activate}}">
+          <span class="b-autocomplete-activation-area-add-text"
+                style="font-size: {{ fontSize }}">
+            {{ addText }}
+          </span>
+        </a>
+        
+        <template if="state == State.ACTIVE">
+          <form id="b-autocomplete-form" on-submit="{{select}}">
+            <input type="text"
+                   bind-value="_filterQuery"
+                   on-input="{{updateFilteredEntries}}"
+                   on-focus="{{focused}}"
+                   on-blur="{{blurred}}"
+                   class="q-autocomplete-form-input b-autocomplete-form-input"
+                   placeholder="{{placeholder}}"
+                   style="font-size: {{ fontSize }}">
+          </form>
+          {{ focusOnInput() }}
+        </template>
+  
+        <template if="filteredEntries.isNotEmpty">
+          <ul class="b-autocomplete-results" style="max-height: {{ maxHeight }}">
+            <template iterate="entry in filteredEntries">
+              <template instantiate if="entry == activeEntry">
+                <!-- mouse-down is used instead of click to make sure it is
+                captured before the blur event is fire -->
+                <li class="b-autocomplete-results-li b-autocomplete-active"
+                    on-mouse-down="{{select}}"
+                    on-touch-start="{{select}}">{{ entry.sanitizedHtml }}</li>
+              </template>
+              <template if="entry != activeEntry">
+                <li class="b-autocomplete-results-li"
+                    on-mouse-over="{{setToActiveEntry}}"
+                    on-click="{{select}}"
+                    on-mouse-down="{{select}}">{{ entry.sanitizedHtml }}</li>
+              </template>
+            </template>
+          </ul>
+        </template>
+      </div>
+    
+  </template>
+  <script type="application/dart" src="autocomplete.dart"></script>
+</polymer-element>
