@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>b-autocomplete example</title>
+    <script src="packages/web_components/platform.js"></script>
+    <script src="packages/web_components/dart_support.js"></script>
+    <link rel="import" href="../../lib/components/autocomplete/autocomplete.html" />
+  </head>
+
+  <body unresolved>
+    <h1>b-autocomplete example</h1>
+    
+    <b-autocomplete maxHeight="300px"
+                       width="300px"
+                       on-select="addRepository($event)"
+                       addText="Add Repository …"
+                       placeholder="Type a Repository Name">
+         <div class="prefix-area">
+           <span class="x-repository-selection-input-icon"></span>
+         </div>
+         <div class="data-source">
+           <div data-text="T1" data-id="T1">
+              T1
+             </div>
+             <div data-text="T2" data-id="T2">
+              T2
+             </div>
+             <div data-text="T3" data-id="T3">
+              T3
+             </div>
+             <div data-text="T4" data-id="T4">
+              T4
+             </div>
+         </div>
+       </b-autocomplete>
+    
+
+    <script type="application/dart">export 'package:polymer/init.dart';</script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>
