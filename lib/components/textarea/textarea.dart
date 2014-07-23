@@ -7,18 +7,20 @@ import 'dart:convert';
 
 @CustomTag('b-textarea')
 class BeeTextarea extends PolymerElement {
+
   static const EventStreamProvider<CustomEvent> blurEvent = const EventStreamProvider<CustomEvent>('blur');
   static const EventStreamProvider<CustomEvent> focusEvent = const EventStreamProvider<CustomEvent>('focus');
-  @observable String value;
-  @observable String placeholder = '';
-  String minHeight;
-  String paddingTop = '0';
-  String paddingRight = '0';
-  String paddingBottom = '0';
-  String paddingLeft = '0';
-  String fontSize = '14';
-  String lineHeight = '21';
-  String color = "505050";
+
+  @published String value = '';
+  @published String placeholder = '';
+  @published String minHeight;
+  @published String paddingTop = '0';
+  @published String paddingRight = '0';
+  @published String paddingBottom = '0';
+  @published String paddingLeft = '0';
+  @published String fontSize = '14';
+  @published String lineHeight = '21';
+  @published String color = "#505050";
 
   var _windowResize;
   var _textarea;
@@ -34,18 +36,15 @@ class BeeTextarea extends PolymerElement {
   }
 
   void attached() {
-    window.console.log('attached');
-
     _textarea = shadowRoot.querySelector('.q-textarea-textarea');
     _shadow = shadowRoot.querySelector('.q-textarea-shadow');
-    window.console.log(_shadow);
 
     _textarea.style.paddingTop = '${paddingTop}px';
     _textarea.style.paddingRight = '${paddingRight}px';
     _textarea.style.paddingBottom = '${paddingBottom}px';
     _textarea.style.paddingLeft = '${paddingLeft}px';
     _textarea.style.fontSize = '${fontSize}px';
-    _textarea.style.color = '#${color}';
+    _textarea.style.color = '${color}';
     if (lineHeight == 'normal' || lineHeight == 'inherit') {
       _textarea.style.lineHeight = lineHeight;
     } else {
@@ -80,8 +79,7 @@ class BeeTextarea extends PolymerElement {
   /**
    * Allow to set the selection range of the text carret.
    */
-  @published
-  setSelectionRange(int start, int end) {
+  void setSelectionRange(int start, int end) {
     _textarea = shadowRoot.querySelector('.q-textarea-textarea');
     _textarea.setSelectionRange(start, end);
   }
@@ -101,14 +99,9 @@ class BeeTextarea extends PolymerElement {
    * same issue with the status update form.
    */
   void resize() {
-    window.console.log('resize');
-    window.console.log(value);
-    window.console.log(_textarea.value);
-
     _shadow.style.width = _textarea.getComputedStyle().width;
     var validator = new NodeValidatorBuilder()..allowElement('br');
     _shadow.setInnerHtml(_sanitizeInput(_textarea.value), validator: validator);
-    window.console.log(_shadow);
     var _shadowHeight = _shadow.getComputedStyle().height;
 
     // Wait with the resize until the widget is rendered in the DOM. A textarea
@@ -129,7 +122,6 @@ class BeeTextarea extends PolymerElement {
     } else {
       newHeight = _shadowHeight;
     }
-    window.console.log(newHeight);
     _textarea.style.height = newHeight;
   }
 
@@ -137,13 +129,13 @@ class BeeTextarea extends PolymerElement {
     _windowResize.cancel();
   }
 
-  Stream<CustomEvent> get onBlur => blurEvent.forTarget(this);
+  ElementStream<CustomEvent> get onBlur => blurEvent.forTarget(this);
 
   handleBlur(Event event) {
     dispatchEvent(new CustomEvent("blur"));
   }
 
-  Stream<CustomEvent> get onFocus => focusEvent.forTarget(this);
+  ElementStream<CustomEvent> get onFocus => focusEvent.forTarget(this);
 
   handleFocus(Event event) {
     dispatchEvent(new CustomEvent("focus"));
@@ -154,12 +146,12 @@ class BeeTextarea extends PolymerElement {
    *
    * The input gets escaped based on
    * https://www.owasp.org/index.php/XSS_%28Cross_Site_Scripting%29_Prevention_Cheat_Sheet#RULE_.231_-_HTML_Escape_Before_Inserting_Untrusted_Data_into_HTML_Element_Content
+   * It is important to escape the test content to prevent a script injection
+   * done by the shadow div which is used to determine the proper height.
    *
    * Further whitespaces and new lines are used to create a container with a proper height.
    */
   String _sanitizeInput(input) {
-    window.console.log('sanitize input');
-
     var computedHtml;
     if (input != null) {
       var escaptedHtml = _htmlEscape.convert(input);
