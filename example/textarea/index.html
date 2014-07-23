@@ -12,7 +12,21 @@
 
   <body>
     <h1>b-textarea example</h1>
-    <b-textarea value="Edit me …"></b-textarea>
+
+    <button is="b-button" size="small">click me</button>
+
+    <p>Simple Example:</p>
+    <b-textarea value="Hey, I'm the Bee-Textarea. Click on me for editing. Hint: I will automatically grow based on the content you provide."></b-textarea>
+
+    <p>Placeholder Example:</p>
+    <b-textarea placeholder="Edit me …"></b-textarea>
+
+    <p>Styled Example:</p>
+    <b-textarea paddingBottom="10"
+                fontSize="21"
+                lineHeight="32"
+                color="#bbbbff"
+                value="Hey, I'm the Bee-Textarea. Click on me for editing. Hint: I will automatically grow based on the content you provide."></b-textarea>
 
     <script type="application/dart">export 'package:polymer/init.dart';</script>
     <script src="packages/browser/dart.js"></script>
