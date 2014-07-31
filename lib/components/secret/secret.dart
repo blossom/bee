@@ -93,7 +93,7 @@ class BeeSecret extends PolymerElement {
 
       // For Browsers with ShadowDOM support the shadowRoot.host matches while
       // for Browsers without ShadowDOM support text or password field matches.
-      if (activeElement.hashCode != shadowRoot.host.hashCode &&
+      if (activeElement.hashCode != hashCode &&
           activeElement.hashCode != textField.hashCode &&
           activeElement.hashCode != passwordField.hashCode) {
         dispatchEvent(new CustomEvent("blur"));
