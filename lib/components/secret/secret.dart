@@ -1,6 +1,7 @@
 import 'package:polymer/polymer.dart';
 import 'dart:async';
 import 'dart:html';
+import 'dart:js' as js;
 
 @CustomTag('b-secret')
 class BeeSecret extends PolymerElement {
@@ -87,21 +88,14 @@ class BeeSecret extends PolymerElement {
       var textField = shadowRoot.querySelector('.q-text-field');
       var passwordField = shadowRoot.querySelector('.q-password-field');
 
-      window.console.log(document.activeElement.hashCode);
-
-      // at least one of them should be the same as activeElement
-      window.console.log(shadowRoot.host.hashCode);
-      window.console.log(textField.hashCode);
-      window.console.log(passwordField.hashCode);
-
-      window.console.log(document.activeElement);
-      window.console.log(textField);
+      var activeElement = js.context.callMethod('wrap',
+          [document.activeElement]);
 
       // For Browsers with ShadowDOM support the shadowRoot.host matches while
       // for Browsers without ShadowDOM support text or password field matches.
-      if (document.activeElement.hashCode != shadowRoot.host.hashCode &&
-          document.activeElement.hashCode != textField.hashCode &&
-          document.activeElement.hashCode != passwordField.hashCode) {
+      if (activeElement.hashCode != shadowRoot.host.hashCode &&
+          activeElement.hashCode != textField.hashCode &&
+          activeElement.hashCode != passwordField.hashCode) {
         dispatchEvent(new CustomEvent("blur"));
         hasFocus = false;
       }
