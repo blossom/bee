@@ -15,7 +15,6 @@
     
     <b-autocomplete maxHeight="300px"
                        width="300px"
-                       on-select="addRepository($event)"
                        addText="Add Repository …"
                        placeholder="Type a Repository Name">
          <div class="prefix-area">
@@ -36,9 +35,10 @@
              </div>
          </div>
        </b-autocomplete>
-    
+       <br style="clear:both" />
+    <div class="selected-item"></div>
 
-    <script type="application/dart">export 'package:polymer/init.dart';</script>
+    <script type="application/dart" src="index.dart"></script>
     <script src="packages/browser/dart.js"></script>
   </body>
 </html>
