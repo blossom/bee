@@ -2,6 +2,7 @@ import 'package:escape_handler/escape_handler.dart';
 import 'dart:async';
 import 'dart:html';
 import 'package:polymer/polymer.dart';
+import 'dart:js' as js;
 
 
 class AutocompleteEntry {
@@ -16,28 +17,31 @@ class AutocompleteEntry {
     _element.dataset.remove('id');
   }
 
-  get sanitizedHtml {
-    var validator = new NodeValidatorBuilder()..allowHtml5();
-    var documentFragment = document.body.createFragment(_element.outerHtml, validator: validator);
-    // @TODO:
-    // documentFragment can't be placed in polymer template like that
-    return documentFragment;
+  get elementHtml {
+    return _element.outerHtml;
   }
 }
 
 @CustomTag('b-autocomplete')
 class BeeAutocompleteComponent extends PolymerElement {
   
+  static const EventStreamProvider<CustomEvent> selectEvent = const EventStreamProvider<CustomEvent>('select');
+  Stream<CustomEvent> get onSelect => selectEvent.forTarget(this);
   
+  @published
   String maxHeight = "200px";
+  @published
   String width = "200px";
+  @published
   String addText = "Add &#8230;";
+  @published
   String placeholder = "";
+  @published
   String fontSize = "14px";
   
   int _elementTimestamp = 0;
   EscapeHandler _escapeHandler = new EscapeHandler();
-  AutocompleteEntry activeEntry = null;
+  @observable AutocompleteEntry activeEntry = null;
   StreamSubscription _keyUp;
   
   @observable bool isActive = false;
@@ -61,7 +65,6 @@ class BeeAutocompleteComponent extends PolymerElement {
   
   void focusOnInput(var x) {
     Element field = shadowRoot.querySelector('.q-autocomplete-form-input');
-    print(field.toString());
     field.focus();
   }
   
@@ -109,11 +112,14 @@ class BeeAutocompleteComponent extends PolymerElement {
   }
   
   void select(Event event, var details, Node node) {
-    event.preventDefault();
-    print('reach select!');
+    if (event != null) {
+      event.preventDefault();
+    }
     var detail = {'id': activeEntry.id, 'text': activeEntry.searchableText};
     dispatchEvent(new CustomEvent("select", detail: detail));
-    reset();
+    filterQuery = activeEntry.searchableText;
+    // clear suggestions because entry has been chosen.
+    filteredEntries.clear();
     focusOnInput(null);
   }
   
@@ -137,8 +143,8 @@ class BeeAutocompleteComponent extends PolymerElement {
     updateFilteredEntries();
   }
   
-  void setToActiveEntry(Event event, var details, var node) {
-    
+  void setToActiveEntry(Event event, var details, Node node) {
+    activeEntry = filteredEntries.singleWhere((entry) => entry.id == node.dataset['entry-id']);
   }
   
   void updateFilteredEntries() {
@@ -153,6 +159,7 @@ class BeeAutocompleteComponent extends PolymerElement {
     }
     filteredEntries.clear();
     filteredEntries.addAll(tmpFilteredEntries);
+
     if (filteredEntries.isNotEmpty) {
       activeEntry = filteredEntries.first;
     }
@@ -160,15 +167,19 @@ class BeeAutocompleteComponent extends PolymerElement {
   
   void keyUpHandler(KeyboardEvent event) {
     Element input = shadowRoot.querySelector('.q-autocomplete-form-input');
-    // @TODO: 
-    // check non-shadowdom node
-    if (document.activeElement.hashCode == input.hashCode) {
+    var activeElement = js.context.callMethod('wrap',
+             [document.activeElement]);
+
+    if (activeElement == this || activeElement == input) {
       switch (new KeyEvent.wrap(event).keyCode) {
         case KeyCode.UP:
           _moveUp();
           break;
         case KeyCode.DOWN:
           _moveDown();
+          break;
+        case KeyCode.ENTER:
+          select(null, null, null);
           break;
       }
     }

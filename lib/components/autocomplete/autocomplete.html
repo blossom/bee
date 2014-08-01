@@ -1,4 +1,5 @@
 <link rel="import" href="../../../../packages/polymer/polymer.html">
+<link rel="import" href="../safe-html/safe-html.html" />
 <polymer-element name="b-autocomplete">
   <template>
     <link rel="stylesheet" href="autocomplete.css" />
@@ -8,8 +9,8 @@
     </div>
     
     <a href="#" 
-      on-mouse-down="{{activate}}"
-      on-touch-start="{{activate}}" 
+      on-mousedown="{{activate}}"
+      touch-start="{{activate}}" 
       class="b-autocomplete-prefix-area-wrapper">
         <content select=".prefix-area"></content>
     </a>
@@ -20,7 +21,7 @@
            on-touch-start="{{activate}}">
           <span class="b-autocomplete-activation-area-add-text"
                 style="font-size: {{ fontSize }}">
-            {{ addText }}
+            <b-safe-html model="{{ addText }}"></b-safe-html>
           </span>
         </a>
         
@@ -40,20 +41,14 @@
         <template if="{{ filteredEntries.isNotEmpty }}">
           <ul class="b-autocomplete-results" style="max-height: {{ maxHeight }}">
             <template repeat="{{ entry in filteredEntries }}">
-              <template if="{{ entry == activeEntry }}">
                 <!-- mouse-down is used instead of click to make sure it is
                 captured before the blur event is fire -->
-                <li class="b-autocomplete-results-li b-autocomplete-active" data-entry-id="{{ entry.id }}"
-                    on-mouse-down="{{select}}"
-                    on-touch-start="{{select}}">{{ entry.sanitizedHtml }}</li>
-              </template>
-              <template if="{{ entry != activeEntry }}">
-                <li class="b-autocomplete-results-li"
-                    on-mouse-over="{{ setToActiveEntry }}"
-                    data-entry-id="{{ entry.id }}"
-                    on-click="{{select}}"
-                    on-mouse-down="{{select}}">{{ entry.sanitizedHtml }}</li>
-              </template>
+                <li class="b-autocomplete-results-li {{ { 'b-autocomplete-active': entry == activeEntry } }}" data-entry-id="{{ entry.id }}"
+                    on-mousedown="{{select}}"
+                    touch-start="{{select}}"
+                    on-mouseover="{{ setToActiveEntry }}">
+                    <b-safe-html model="{{ entry.elementHtml }}"></b-safe-html>
+                </li>
             </template>
           </ul>
         </template>
