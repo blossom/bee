@@ -9,6 +9,6 @@ void main(List<String> args) {
                     'example/overlay/index.html',
                     'example/hide-tooltip/index.html',
                     'example/textarea/index.html',
-                    'example/textarea/index.html'];
+                    'example/autocomplete/index.html'];
  lint(entryPoints: entryPoints, options: parseOptions(args));
 }
