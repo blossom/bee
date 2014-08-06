@@ -1,8 +1,48 @@
 <link rel="import" href="../../../../packages/polymer/polymer.html">
+<link rel="import" href="../textarea/textarea.html">
+
 <polymer-element name="b-editable-text">
   <template>
     <link rel="stylesheet" href="editable_text.css" />
-    weee
+
+    <div class="q-editable-text-contentarea">
+      ok
+      <template if='{{ !inEditMode }}'>
+        lalal
+        <div on-click="{{ edit }}" on-touch-start="{{ edit }}" class="x-editable-text-visual">
+          <div class="x-editable-text-edit-icon q-editable-text-edit-icon"></div>
+          <template if='valueIsEmpty'>
+            <template if='{{ placeholderIsEmpty }}'>
+              <!--
+              The div is needed to properly calcuclate the selection.
+              We use a non-breaking space to make sure the box doesn't shrink to height 0.
+              -->
+              <div>&nbsp;</div>
+            </template>
+            <template if='{{ !placeholderIsEmpty }}'>
+              <!-- the div is needed to properly calcuclate the selection -->
+              <div>{{ placeholder }}</div>
+            </template>
+          </template>
+          <template if='{{ !valueIsEmpty }}'>
+            <!-- the div is needed to properly calcuclate the selection -->
+            <div class="x-editable-text-content">{{ value }}</div>
+          </template>
+        </div>
+      </template>
+    </div>
+
+    <template if='{{ inEditMode }}'>
+      <b-textarea class="q-editable-text-textarea x-editable-text-textarea"
+                  bind-value="value"
+                  on-blur="{{ update }}"
+                  placeholder="{{placeholder}}"
+                  font-size="{{fontSize}}"
+                  line-height="{{lineHeight}}"
+                  color="{{color}}">
+      </b-textarea>
+    </template>
+
   </template>
   <script type="application/dart" src="editable_text.dart"></script>
 </polymer-element>
