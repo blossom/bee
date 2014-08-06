@@ -107,7 +107,8 @@ class BeeAutocompleteComponent extends PolymerElement {
       isActive = true;
       Element field = shadowRoot.querySelector('.q-autocomplete-activation-area');
       field.style.display = 'none';
-      new Future.delayed(new Duration(milliseconds:50)).then(focusOnInput);
+
+      new Future(() => null).then(focusOnInput);
     }
   }
   
