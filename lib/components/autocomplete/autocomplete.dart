@@ -148,6 +148,9 @@ class BeeAutocompleteComponent extends PolymerElement {
     activeEntry = filteredEntries.singleWhere((entry) => entry.id == node.dataset['entry-id']);
   }
   
+  /**
+   * updates the filteredEntries based on the current filterQuery and available entries
+   */
   void updateFilteredEntries() {
     var sanitizedQuery = filterQuery.trim().toLowerCase();
     var tmpFilteredEntries = [];
