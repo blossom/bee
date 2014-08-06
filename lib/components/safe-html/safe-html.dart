@@ -10,7 +10,6 @@ class SafeHtml extends PolymerElement  {
   @published String model;
 
   NodeValidator nodeValidator;
-  bool get applyAuthorStyles => true;
   bool isInitialized = false;
 
   SafeHtml.created() : super.created() {
