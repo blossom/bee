@@ -1,7 +1,12 @@
 import 'dart:async';
 import "dart:html";
-
 import "package:polymer/polymer.dart";
+
+/* 
+ * <b-safe-html> based on Guenter Zoechbauer's feedback on stackoverflow.
+ * Thank you! ( http://stackoverflow.com/a/20869025/837709 )
+ * 
+ */
 
 
 @CustomTag("b-safe-html")
