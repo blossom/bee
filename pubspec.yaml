@@ -21,3 +21,4 @@ transformers:
      - example/overlay/index.html
      - example/hover-tooltip/index.html
      - example/textarea/index.html
+     - example/autocomplete/index.html
