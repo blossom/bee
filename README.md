@@ -2,7 +2,7 @@
 
 Bee is a collection of lightweight interaction elements for modern web applications. It is built on top of [Dart's Web UI](http://www.dartlang.org/articles/web-ui/) package. It contains frequently used components like Buttons, Popovers, Overlays, Input Fields and more.
 
-##Install
+## Install
 
 Bee is a [Pub Package](http://pub.dartlang.org/packages/bee). To install Bee you can add it to your pubspec.yaml.
 
@@ -12,7 +12,7 @@ dependencies:
   bee: any
 ```
 
-##Getting started
+## Getting started
 
 To use a component you need to import it via a link tag.
 
@@ -28,9 +28,9 @@ Add the custom Bee element inside the same file where you imported the component
 
 You might want to check out the [example](https://github.com/blossom/bee/tree/master/example).
 
-##Components
+## Components
 
-###Button
+### Button
 
 ```html
 <link rel="import" href="package:bee/components/button.html">
@@ -40,7 +40,7 @@ You might want to check out the [example](https://github.com/blossom/bee/tree/ma
 <b-button>Primary</b-button>
 ```
 
-###Show Password
+### Show Password
 
 ```html
 <link rel="import" href="package:bee/components/secret.html">
@@ -50,7 +50,7 @@ You might want to check out the [example](https://github.com/blossom/bee/tree/ma
 <b-secret placeholder="Enter your Password"></b-secret>
 ```
 
-###Loading Indicator
+### Loading Indicator
 
 ```html
 <link rel="import" href="package:bee/components/loading.html">
@@ -60,7 +60,7 @@ You might want to check out the [example](https://github.com/blossom/bee/tree/ma
 <b-loading></b-loading>
 ```
 
-###Popover
+### Popover
 
 ```html
 <link rel="import" href="package:bee/components/popover.html">
@@ -73,7 +73,7 @@ You might want to check out the [example](https://github.com/blossom/bee/tree/ma
 </b-popover>
 ```
 
-###Overlay
+### Overlay
 
 ```html
 <link rel="import" href="package:bee/components/overlay.html">
@@ -125,7 +125,7 @@ Note: Pressing 'ESC' closes popovers as well as overlays but only closes the you
 </b-overlay>
 ```
 
-##Coming Soon
+## Coming Soon
 
 This is just the initial release and we'll add a bunch of additional components, examples, documentation and polish going forward :)
 
